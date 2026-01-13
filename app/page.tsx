@@ -1,7 +1,12 @@
+import Navbar from "@/components/ui/landing/nav";
 import React from "react";
 
 const Page = () => {
-  return <div>Page</div>;
+  return (
+    <main className="w-full flex flex-col relative z-10">
+      <Navbar />
+    </main>
+  );
 };
 
 export default Page;
