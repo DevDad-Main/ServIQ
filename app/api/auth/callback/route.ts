@@ -1,6 +1,18 @@
+import { db } from "@/db/client";
 import scaleKit from "@/lib/scalekit";
 import { logger } from "devdad-express-utils";
 import { NextRequest, NextResponse } from "next/server";
+import { user as User } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+
+const HTTP_OPTIONS: Partial<ResponseCookie> = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  path: "/",
+  maxAge: 60 * 60 * 24 * 1, // 1 day
+};
 
 export async function GET(req: NextRequest) {
   try {
@@ -55,8 +67,41 @@ export async function GET(req: NextRequest) {
         { status: 500 },
       );
     }
+
+    const existingUser = await db
+      .select()
+      .from(User)
+      .where(eq(User.email, user.email));
+
+    if (existingUser.length === 0) {
+      await db.insert(User).values({
+        name: user?.name || "anonymous",
+        email: user.email,
+        organization_id: organizationID,
+      });
+    }
+
+    const response = NextResponse.redirect(new URL("/", req.url));
+    const userSession = {
+      email: user.email,
+      organization_id: organizationID,
+    };
+
+    response.cookies.set(
+      "user_session",
+      JSON.stringify(userSession),
+      HTTP_OPTIONS,
+    );
+
+    return response;
   } catch (error) {
     console.error(error);
     logger.error("GET: /auth/callback error: ", { error });
+    return NextResponse.json(
+      {
+        error: "Failed to authenticate user",
+      },
+      { status: 500 },
+    );
   }
 }
