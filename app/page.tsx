@@ -4,6 +4,7 @@ import SocialProof from "@/components/ui/landing/social";
 import Features from "@/components/ui/landing/features";
 import React from "react";
 import Integration from "@/components/ui/landing/integration";
+import Pricing from "@/components/ui/landing/pricing";
 
 const Page = () => {
   return (
@@ -13,6 +14,7 @@ const Page = () => {
       <SocialProof />
       <Features />
       <Integration />
+      <Pricing />
     </main>
   );
 };
