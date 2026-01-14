@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Send, User } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
@@ -54,18 +54,85 @@ const Hero = () => {
 
             {/* Chat Area */}
             <div className="flex-1 p-6 overflow-y-auto space-y-6 bg-zinc-950/30">
+              {/* Chat Box Message */}
               <div className="flex w-full flex-col items-start">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center">
-                  <Image
-                    src="/chatbot-avatar.jpg"
-                    alt="Support Agent"
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="flex max-w-[85%] gap-3 flex-row">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border border-b-zinc-950/30 overflow-hidden">
+                    <Image
+                      src="/chatbot-avatar.jpg"
+                      alt="Support Agent"
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="p-4 rounded-2xl text-sm leading-relaxed shadow-sm bg-white text-zinc-900 rounded-tl-sm">
+                      Hi there, How can i help you today?.
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 pt-1 ml-1">
+                      <span className="px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-300 text-xs font-medium cursor-default">
+                        Pricing
+                      </span>
+
+                      <span className="px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-300 text-xs font-medium cursor-default">
+                        Support
+                      </span>
+
+                      <span className="px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-300 text-xs font-medium cursor-default">
+                        FAQ
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="space-y-2"></div>
+                {/* User Box Message */}
+                <div className="flex w-full flex-col items-end mt-5">
+                  <div className="flex max-w-[85%] gap-3 flex-row-reverse">
+                    <div className="w-10 h-10 rounded-full items-center justify-center shrink-0 border border-white/5 bg-zinc-700">
+                      <User className="w-6 h-6 m-1 ml-1 text-zinc-400" />
+                    </div>
+                    <div className="p-4 rounded-2xl text-sm leading-relaxed shadow-sm bg-zinc-800 text-zinc-200 rounded-tr-sm">
+                      I require some background information regarding ServIQ.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Chat Box Response */}
+                <div className="flex w-full flex-col items-start mt-5">
+                  <div className="flex max-w-[85%] gap-3 flex-row">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border border-white/5 overflow-hidden">
+                      <Image
+                        src="/chatbot-avatar.jpg"
+                        alt="Support Agent"
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    <div className="p-4 rounded-2xl text-sm leading-relaxed shadow-sm bg-white text-zinc-900 rounded-tl-sm">
+                      ServIQ is an integrated ecosystem designed to enhance
+                      developer efficiency. It includes tools like ServIQ Logs
+                      for real-time monitoring and DevDad Inc for constant
+                      support.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Input Area */}
+          <div className="p-4 bg-[#0a0a0e] border-t border-white/5 shrink-0">
+            <div className="relative">
+              <div className="min-h-12.5 w-full px-4 py-3 text-sm bg-zinc-900/50 border border-white/10 rounded-xl text-zinc-500 flex items-center justify-between">
+                <span>Type a message...</span>
+                <button className="h-8 w-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-500 cursor-default">
+                  <Send className="w-4 h-4" />
+                </button>
               </div>
             </div>
           </div>
