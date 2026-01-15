@@ -97,8 +97,53 @@
     }
 }
 
+@keyframes pulse-slow {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes message-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes message-content {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .animate-float {
-    animation: float-gentle 6s ease-in-out infinite;
+    animation: float-gently 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 8s ease-in-out infinite;
+}
+
+.animate-message-in {
+    animation: message-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-message-content {
+    animation: message-content 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+    animation-delay: 0.1s;
 }
 
 .glass-card {
