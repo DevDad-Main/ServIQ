@@ -1,14 +1,18 @@
 "use client";
 import { cn } from "@/lib/utils";
 import {
+  ArrowRight,
   Building2,
   ChevronLeft,
+  CommandIcon,
   Globe,
   LinkIcon,
   Sparkles,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
+import { Input } from "../ui/input";
 
 interface InitialData {
   businessName: string;
@@ -183,7 +187,85 @@ const InitialForm = () => {
           </div>
 
           <div className="space-y-6">
-            <div space-y-2></div>
+            <div className="space-y-2">
+              <h1 className="text-3xl md:text-4xl font-medium tex-white leading-tight">
+                {stepData.question}
+              </h1>
+              <p className="text-lg text-zinc-500 font-light">
+                {stepData.description}
+              </p>
+            </div>
+
+            <div className="relative group">
+              {stepData.type === "textarea" ? (
+                <Textarea
+                  ref={inputRef as any}
+                  value={formData[stepData.field] as string}
+                  onChange={(e) => {
+                    setFormData({
+                      ...formData,
+                      [stepData.field]: e.target.value,
+                    });
+                  }}
+                  onKeyDown={handleKeyDown}
+                  placeholder={stepData.placeHolder}
+                  className="w-full bg-transparent border-0 border-b border-white/10 text-xl md:text-2xl py-4 pr-12 text-white palceholder:text-zinc-700 focus-visible:ring-0 focus-visible:border-indigo-500 rounded-none h-auto resize-none min-h-30 shadow-none transition-colors"
+                  autoFocus
+                />
+              ) : (
+                <Input
+                  ref={inputRef as any}
+                  value={formData[stepData.field] as string}
+                  onChange={(e) => {
+                    setFormData({
+                      ...formData,
+                      [stepData.field]: e.target.value,
+                    });
+                  }}
+                  onKeyDown={handleKeyDown}
+                  placeholder={stepData.placeHolder}
+                  className="w-full bg-transparent border-0 border-b border-white/10 text-xl md:text-2xl py-4 pr-12 text-white placeholder:text-zinc-700 focus-visible:ring-0 focus-visible:border-indigo-600 rounded-none h-auto shadow-none transition-colors"
+                  autoFocus
+                />
+              )}
+
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 text-zinc-600 pointer-events-none">
+                <Icon className="w-6 h-6" />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-8">
+              <div className="hidden sm:flex items-center gap-2">
+                {stepData.type === "textarea" ? (
+                  <>
+                    <CommandIcon className="w-3 h-3" />
+                    <span>+ Enter</span>
+                  </>
+                ) : (
+                  <span>Press Enter ...</span>
+                )}
+                <span className="ml-1">to continue</span>
+              </div>
+
+              {/* Complete Button */}
+              <Button
+                onClick={handleNext}
+                disabled={!isStepValid}
+                className={cn(
+                  "rounded-full px-8 py-6 text-base font-medium transition-all duration-300",
+                  !isStepValid
+                    ? "bg-zinc-800 text-zinc-500 hover:bg-zinc-800 cursor-not-allowed"
+                    : "bg-white text-black hover:bg-zinc-200 hover:shadow-lg hover:shadow=white/10",
+                )}
+              >
+                {currentStep === STEPS.length - 1 ? "Submit" : "Continue"}
+                {currentStep === STEPS.length - 1 ? (
+                  <Sparkles className="w-4 h-4 ml-2" />
+                ) : (
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       )}

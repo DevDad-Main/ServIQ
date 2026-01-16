@@ -28,3 +28,8 @@
 {"level":"info","message":"Authorization Func Called:","service":"serviq-saas","timestamp":"2026-01-15T08:59:41.254Z"}
 {"level":"info","message":"Authorization Func Called:","service":"serviq-saas","timestamp":"2026-01-15T09:02:41.476Z"}
 {"level":"info","message":"Authorization Func Called:","service":"serviq-saas","timestamp":"2026-01-15T09:05:14.385Z"}
+{"level":"info","message":"Authorization Func Called:","service":"serviq-saas","timestamp":"2026-01-16T10:14:25.906Z"}
+{"level":"info","message":"GET: Auth Called: ","service":"serviq-saas","timestamp":"2026-01-16T10:14:35.462Z"}
+{"level":"info","message":"GET: Auth Called: ","service":"serviq-saas","timestamp":"2026-01-16T10:14:36.743Z"}
+{"URL":"http://localhost:3000/api/auth/callback?code=N6b7n1dE6U93kVKS7UHD_wQY8v7QxXxY40rBrv73N_3qdxuHPj0&state=acc3c7de80e62444e5c73a89af3890f6","body":null,"level":"info","message":"GET: /auth/callback called: ","service":"serviq-saas","timestamp":"2026-01-16T10:14:37.827Z"}
+{"level":"info","message":"Authorization Func Called:","service":"serviq-saas","timestamp":"2026-01-16T10:14:40.274Z"}
