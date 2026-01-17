@@ -1,21 +1,23 @@
 import { Request, Response, NextFunction } from "express";
 
-interface UserSession {
-  email: string;
-  organization_id: string;
+export interface AuthRequest extends Request {
+  user?: {
+    email: string;
+    organization_id: string;
+  };
 }
 
 export const isUserAuthorized = async (
   req: Request,
-): Promise<UserSession | null> => {
+): Promise<AuthRequest["user"] | null> => {
   const userSessionCookie = req.cookies?.user_session;
   let user = null;
 
   if (userSessionCookie) {
     try {
-      user = JSON.parse(userSessionCookie) as UserSession;
-    } catch (error: unknown) {
-      console.error(error);
+      user = JSON.parse(userSessionCookie) as AuthRequest["user"];
+    } catch (error) {
+      console.error("Failed to parse user session:", error);
     }
   }
 
@@ -30,10 +32,10 @@ export const authMiddleware = async (
   const user = await isUserAuthorized(req);
 
   if (!user) {
-    res.status(401).json({ error: "User Unauthorized" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
-  (req as any).user = user;
+  (req as AuthRequest).user = user;
   next();
 };
