@@ -1,20 +1,42 @@
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+
+const AUTH_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api/auth`
+  : "http://localhost:3000/api/auth";
+
+const checkAuthStatus = async (): Promise<boolean> => {
+  try {
+    const response = await fetch("/api/auth/status", {
+      credentials: "include",
+    });
+    if (!response.ok) return false;
+    const data = await response.json();
+    return data.authenticated || false;
+  } catch {
+    return false;
+  }
+};
 
 const Navbar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = () => {
-      const userSessionCookie = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("user_session="))
-      setIsAuthenticated(!!userSessionCookie)
-      setIsLoading(false)
-    }
-    checkAuth()
-  }, [])
+    checkAuthStatus().then(setIsAuthenticated).finally(() => setIsLoading(false));
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        checkAuthStatus().then(setIsAuthenticated);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
 
   if (isLoading) {
     return (
@@ -30,7 +52,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-    )
+    );
   }
 
   return (
@@ -49,7 +71,10 @@ const Navbar = () => {
           <Link to="/#features" className="hover:text-white transition-colors">
             Features
           </Link>
-          <Link to="/#how-it-works" className="hover:text-white transition-colors">
+          <Link
+            to="/#how-it-works"
+            className="hover:text-white transition-colors"
+          >
             Integration
           </Link>
           <Link to="/#pricing" className="hover:text-white transition-colors">
@@ -68,13 +93,13 @@ const Navbar = () => {
           ) : (
             <>
               <a
-                href="/auth"
+                href={AUTH_URL}
                 className="text-xs font-medium text-zinc-400 hover:text-white transition-colors"
               >
                 Sign In
               </a>
               <a
-                href="/auth"
+                href={AUTH_URL}
                 className="text-xs font-medium bg-white text-black px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors"
               >
                 Get Started
@@ -84,7 +109,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

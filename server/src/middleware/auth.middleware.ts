@@ -1,3 +1,4 @@
+import { sendError } from "devdad-express-utils";
 import { Request, Response, NextFunction } from "express";
 
 export interface AuthRequest extends Request {
@@ -32,8 +33,7 @@ export const authMiddleware = async (
   const user = await isUserAuthorized(req);
 
   if (!user) {
-    res.status(401).json({ error: "Unauthorized" });
-    return;
+    return sendError(res, "Unauthorized User", 401);
   }
 
   (req as AuthRequest).user = user;

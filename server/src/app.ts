@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 import authRoutes from "./routes/auth/auth.routes";
 import metadataRoutes from "./routes/metadata/metadata.routes";
+import { logger } from "devdad-express-utils";
 
 const app = express();
 
@@ -17,7 +18,13 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/auth", authRoutes);
+// app.use((req, res, next) => {
+//   logger.info(`PATH: ${req.path} URL: ${req.url}`);
+
+//   next();
+// });
+
+app.use("/api/auth", authRoutes);
 app.use("/api/metadata", metadataRoutes);
 
 export default app;

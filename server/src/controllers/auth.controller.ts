@@ -1,8 +1,10 @@
+import "dotenv/config";
 import { Response } from "express";
 import crypto from "crypto";
 import scaleKit from "@/lib/scalekit";
 import { prisma } from "@/lib/prisma";
 import { AuthRequest } from "@/types/express";
+import { logger } from "devdad-express-utils";
 
 const HTTP_OPTIONS = {
   httpOnly: true,
@@ -11,6 +13,25 @@ const HTTP_OPTIONS = {
 };
 
 export const authController = {
+  status: (_req: AuthRequest, res: Response): void => {
+    logger.info("GET: /api/auth/status", {
+      URL: _req.url,
+      body: _req.body,
+      cookies: _req.cookies,
+    });
+    const userSessionCookie = _req.cookies.user_session;
+    if (!userSessionCookie) {
+      res.status(401).json({ authenticated: false });
+      return;
+    }
+    try {
+      const userSession = JSON.parse(userSessionCookie);
+      res.json({ authenticated: true, user: userSession });
+    } catch {
+      res.status(401).json({ authenticated: false });
+    }
+  },
+
   initiate: (_req: AuthRequest, res: Response): void => {
     try {
       const state = crypto.randomBytes(16).toString("hex");
@@ -22,7 +43,10 @@ export const authController = {
         state,
       };
 
-      const authorizationURL = scaleKit.getAuthorizationUrl(redirectURI, options);
+      const authorizationURL = scaleKit.getAuthorizationUrl(
+        redirectURI,
+        options,
+      );
       res.redirect(authorizationURL.toString());
     } catch (error) {
       console.error("Auth initiation error:", error);
@@ -32,9 +56,15 @@ export const authController = {
 
   callback: async (req: AuthRequest, res: Response): Promise<void> => {
     try {
+      logger.info("GET: /api/auth/callback", {
+        URL: req.url,
+        body: req.body,
+      });
       const code = req.query.code as string | undefined;
       const error = req.query.error as string | undefined;
-      const errorDescription = req.query.error_description as string | undefined;
+      const errorDescription = req.query.error_description as
+        | string
+        | undefined;
 
       if (error) {
         res.status(401).json({ error, errorDescription });
@@ -57,7 +87,8 @@ export const authController = {
       const { user, idToken } = authResult;
       const claims = await scaleKit.validateToken(idToken);
 
-      const organizationId = (claims as any).organization_id ||
+      const organizationId =
+        (claims as any).organization_id ||
         (claims as any).org_id ||
         (claims as any).oid ||
         null;
