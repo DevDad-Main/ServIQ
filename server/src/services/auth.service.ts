@@ -12,7 +12,12 @@ export interface AuthResult {
   session?: UserSession;
 }
 
-const HTTP_OPTIONS = {
+const HTTP_OPTIONS: {
+  httpOnly: boolean;
+  secure: boolean;
+  sameSite: "none";
+  maxAge: number;
+} = {
   httpOnly: true,
   secure: true,
   sameSite: "none",
@@ -160,10 +165,11 @@ export const authService = {
   },
 
   getSessionCookieOptions() {
+    const isProduction = process.env.NODE_ENV === "production";
     return {
       httpOnly: true,
-      secure: true,
-      // sameSite: "none",
+      secure: isProduction,
+      sameSite: (isProduction ? "none" : "lax") as "none" | "lax",
       maxAge: 60 * 60 * 24 * 1,
     };
   },

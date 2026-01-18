@@ -14,9 +14,12 @@ export const isUserAuthorized = async (
   const userSessionCookie = req.cookies?.user_session;
   let user = null;
 
+  console.log("User Session Cookie:", userSessionCookie);
+
   if (userSessionCookie) {
     try {
       user = JSON.parse(userSessionCookie) as AuthRequest["user"];
+      console.log("User:", user);
     } catch (error) {
       console.error("Failed to parse user session:", error);
     }

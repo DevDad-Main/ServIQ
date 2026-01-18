@@ -42,10 +42,12 @@ export const authController = {
   initiate: (_req: AuthRequest, res: Response): void => {
     try {
       const state = authService.generateState();
+      const isProduction = process.env.NODE_ENV === "production";
 
       res.cookie("sk_state", state, {
         httpOnly: true,
-        sameSite: "none" as const,
+        secure: isProduction,
+        sameSite: isProduction ? ("none" as const) : ("lax" as const),
         path: "/",
       });
 
@@ -71,16 +73,42 @@ export const authController = {
       const errorDescription = req.query.error_description as
         | string
         | undefined;
+      const state = req.query.state as string | undefined;
 
       if (error) {
+        res.clearCookie("sk_state", {
+          httpOnly: true,
+          sameSite: "none",
+          path: "/",
+        });
         return sendError(res, `${errorDescription}`, 401, {
           error,
         });
       }
 
       if (!code) {
+        res.clearCookie("sk_state", {
+          httpOnly: true,
+          sameSite: "none",
+          path: "/",
+        });
         return sendError(res, "No authorization code found", 400);
       }
+
+      if (!state || state !== req.cookies.sk_state) {
+        res.clearCookie("sk_state", {
+          httpOnly: true,
+          sameSite: "none",
+          path: "/",
+        });
+        return sendError(res, "Invalid state parameter", 400);
+      }
+
+      res.clearCookie("sk_state", {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+      });
 
       const authResult = await authService.authenticateWithCode(code);
 
@@ -123,5 +151,21 @@ export const authController = {
         error,
       );
     }
+  },
+
+  logout: async (_req: AuthRequest, res: Response): Promise<void> => {
+    const isProduction = process.env.NODE_ENV === "production";
+    res.clearCookie("user_session", {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+      path: "/",
+    });
+    res.clearCookie("sk_state", {
+      httpOnly: true,
+      sameSite: "none" as const,
+      path: "/",
+    });
+    sendSuccess(res, null, "Logged out successfully", 200);
   },
 };

@@ -7,7 +7,10 @@ import { meta } from "zod/mini";
 const HTTP_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "none" as const,
+  sameSite:
+    process.env.NODE_ENV === "production"
+      ? ("none" as const)
+      : ("lax" as const),
   maxAge: 60 * 60 * 24 * 1,
 };
 
@@ -62,7 +65,8 @@ export const metadataController = {
       const metadataCookie = req.cookies?.metadata;
 
       if (metadataCookie) {
-        sendSuccess(
+        console.log("[METADATA] Found metadata cookie");
+        return sendSuccess(
           res,
           {
             exists: true,
@@ -74,7 +78,11 @@ export const metadataController = {
         );
       }
 
+      console.log("[METADATA] No cookie, fetching from DB for:", user.email);
+
       const metaDataResult = await metadataService.getByUserEmail(user.email);
+
+      console.log("[METADATA] DB result:", metaDataResult);
 
       if (
         !metaDataResult ||
@@ -82,13 +90,16 @@ export const metadataController = {
         !metaDataResult.data ||
         !metaDataResult.data.businessName
       ) {
+        console.log("[METADATA] No metadata found in DB");
         return sendError(res, "Failed To Fetch User From MetaData", 400, {
           exists: false,
           data: null,
         });
       }
 
-      sendSuccess(
+      console.log("[METADATA] Found metadata in DB:", metaDataResult.data);
+
+      return sendSuccess(
         res,
         {
           exists: true,

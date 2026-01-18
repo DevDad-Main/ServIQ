@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import {
   ArrowRight,
   Building2,
@@ -7,16 +7,17 @@ import {
   Globe,
   Link2,
   Sparkles,
-} from "lucide-react"
-import { useEffect, useRef, useState } from "react"
-import { Button } from "./ui/button"
-import { Textarea } from "./ui/textarea"
-import { Input } from "./ui/input"
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Textarea } from "./ui/textarea";
+import { Input } from "./ui/input";
 
 interface InitialData {
-  businessName: string
-  websiteURL: string
-  externalLinks: string
+  businessName: string;
+  websiteURL: string;
+  externalLinks: string;
 }
 
 const STEPS = [
@@ -34,7 +35,8 @@ const STEPS = [
     id: "website",
     label: "Website",
     question: "What are your website URLs?",
-    description: "We will scape data from the provided data to train your chat bot.",
+    description:
+      "We will scape data from the provided data to train your chat bot.",
     icon: Globe,
     placeHolder: "https://exampledomain.com",
     type: "url",
@@ -51,103 +53,108 @@ const STEPS = [
     badge: "Optional",
     field: "externalLinks" as keyof InitialData,
   },
-]
+];
 
 const InitialForm = () => {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<InitialData>({
     businessName: "",
     websiteURL: "",
     externalLinks: "",
-  })
+  });
 
-  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
-  const progress = ((currentStep + 1) / STEPS.length) * 100
-  const stepData = STEPS[currentStep]
-  const Icon = stepData.icon
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+  const progress = ((currentStep + 1) / STEPS.length) * 100;
+  const stepData = STEPS[currentStep];
+  const Icon = stepData.icon;
+  const navigate = useNavigate();
 
   const isStepValid =
     currentStep >= 2 ||
-    (formData[stepData.field] && formData[stepData.field].trim() !== "")
+    (formData[stepData.field] && formData[stepData.field].trim() !== "");
 
   useEffect(() => {
     setTimeout(() => {
       if (inputRef.current) {
-        inputRef.current.focus()
+        inputRef.current.focus();
       }
-    }, 300)
-  }, [currentStep])
+    }, 300);
+  }, [currentStep]);
 
   const handleNext = async () => {
-    if (isSubmitting) return
+    if (isSubmitting) return;
 
-    const currentField = STEPS[currentStep].field
-    const value = formData[currentField]
+    const currentField = STEPS[currentStep].field;
+    const value = formData[currentField];
 
-    if (currentStep < 2 && (!value || value.trim() === "")) return
+    if (currentStep < 2 && (!value || value.trim() === "")) return;
 
     if (currentStep < STEPS.length - 1) {
-      setIsAnimating(true)
+      setIsAnimating(true);
       setTimeout(() => {
-        setCurrentStep((prev) => prev + 1)
-        setIsAnimating(false)
-      }, 300)
+        setCurrentStep((prev) => prev + 1);
+        setIsAnimating(false);
+      }, 300);
     } else {
-      handleSubmit()
+      handleSubmit();
     }
-  }
+  };
 
   const handleBack = () => {
     if (currentStep > 0) {
-      setIsAnimating(true)
+      setIsAnimating(true);
       setTimeout(() => {
-        setCurrentStep((prev) => prev - 1)
-        setIsAnimating(false)
-      }, 300)
+        setCurrentStep((prev) => prev - 1);
+        setIsAnimating(false);
+      }, 300);
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (STEPS[currentStep].type === "textarea") {
       if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
-        e.preventDefault()
-        handleNext()
+        e.preventDefault();
+        handleNext();
       }
-      return
+      return;
     }
     if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      handleNext()
+      e.preventDefault();
+      handleNext();
     }
-  }
+  };
 
   const handleSubmit = async () => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/metadata/store", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/metadata/store`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            business_name: formData.businessName,
+            website_url: formData.websiteURL,
+            external_links: formData.externalLinks,
+          }),
         },
-        body: JSON.stringify({
-          business_name: formData.businessName,
-          website_url: formData.websiteURL,
-          external_links: formData.externalLinks,
-        }),
-      })
+      );
 
       if (response.ok) {
-        window.location.reload()
+        navigate("/dashboard", { replace: true });
       }
     } catch (error) {
-      console.error("Failed to submit:", error)
+      console.error("Failed to submit:", error);
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="w-full max-w-xl mx-auto min-h-[400px] flex flex-col justify-center">
@@ -221,7 +228,7 @@ const InitialForm = () => {
                     setFormData({
                       ...formData,
                       [stepData.field]: e.target.value,
-                    })
+                    });
                   }}
                   onKeyDown={handleKeyDown}
                   placeholder={stepData.placeHolder}
@@ -237,7 +244,7 @@ const InitialForm = () => {
                     setFormData({
                       ...formData,
                       [stepData.field]: e.target.value,
-                    })
+                    });
                   }}
                   onKeyDown={handleKeyDown}
                   placeholder={stepData.placeHolder}
@@ -288,7 +295,7 @@ const InitialForm = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default InitialForm
+export default InitialForm;

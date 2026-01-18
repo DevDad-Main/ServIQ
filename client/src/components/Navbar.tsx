@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/lib/auth-context";
 
@@ -6,7 +7,14 @@ const AUTH_URL = import.meta.env.VITE_API_URL
   : "/api/auth";
 
 const Navbar = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, logout } = useAuth();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    await logout();
+    setIsLoggingOut(false);
+  };
 
   if (loading) {
     return (
@@ -54,12 +62,21 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           {user ? (
-            <Link
-              to="/dashboard"
-              className="h-10 px-4 rounded-xl bg-white text-black text-sm font-medium hover:bg-zinc-200 transition-all flex items-center gap-2"
-            >
-              Dashboard
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                to="/dashboard"
+                className="h-10 px-4 rounded-xl bg-white text-black text-sm font-medium hover:bg-zinc-200 transition-all flex items-center gap-2"
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="text-xs font-medium text-zinc-400 hover:text-white transition-colors disabled:opacity-50"
+              >
+                {isLoggingOut ? "Signing out..." : "Sign Out"}
+              </button>
+            </div>
           ) : (
             <>
               <a

@@ -35,26 +35,26 @@ const Sidebar = () => {
       try {
         const response = await fetch("/api/metadata/fetch", {
           credentials: "include",
-        });
+        })
 
         if (!response.ok) {
-          setIsLoading(false);
-          return;
+          setIsLoading(false)
+          return
         }
 
-        const res = await response.json();
+        const res = await response.json()
 
-        if (res.success && res.data) {
-          setMetadata(res.data);
+        if (res.data?.exists) {
+          setMetadata(res.data)
         }
       } catch {
         // Silently handle errors
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    fetchMetadata();
-  }, []);
+    }
+    fetchMetadata()
+  }, [])
 
   return (
     <div className="w-64 border-r border-white/5 bg-[#050509] flex-col h-screen fixed left-0 top-0 z-40 hidden md:flex">
