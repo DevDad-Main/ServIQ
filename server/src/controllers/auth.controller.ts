@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthRequest } from "@/types/express";
-import { logger } from "devdad-express-utils";
+import { logger, sendError, sendSuccess } from "devdad-express-utils";
 import { authService } from "@/services/auth.service";
 
 export const authController = {
@@ -9,6 +9,7 @@ export const authController = {
       URL: req.url,
       body: req.body,
       cookies: req.cookies,
+      hasUserSessionCookie: !!req.cookies.user_session,
     });
 
     const result = await authService.getSessionFromCookie(
@@ -16,11 +17,26 @@ export const authController = {
     );
 
     if (!result.success || !result.session) {
-      res.status(401).json({ authenticated: false });
-      return;
+      logger.warn("Auth status: session invalid or missing", {
+        hasCookie: !!req.cookies.user_session,
+        cookieValue: req.cookies.user_session?.substring(0, 50) + "...",
+        error: result.error,
+      });
+      return sendError(res, "Unauthenticated User", 401, {
+        authenticated: false,
+      });
     }
 
-    res.json({ authenticated: true, user: result.session });
+    // res.json({ authenticated: true, user: result.session });
+    sendSuccess(
+      res,
+      {
+        authenticated: true,
+        user: result.session,
+      },
+      " Fetched User From Cookies Successfully",
+      200,
+    );
   },
 
   initiate: (_req: AuthRequest, res: Response): void => {
@@ -29,7 +45,7 @@ export const authController = {
 
       res.cookie("sk_state", state, {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "none" as const,
         path: "/",
       });
 
@@ -57,36 +73,55 @@ export const authController = {
         | undefined;
 
       if (error) {
-        res.status(401).json({ error, errorDescription });
-        return;
+        return sendError(res, `${errorDescription}`, 401, {
+          error,
+        });
       }
 
       if (!code) {
-        res.status(400).json({ error: "No authorization code found" });
-        return;
+        return sendError(res, "No authorization code found", 400);
       }
 
       const authResult = await authService.authenticateWithCode(code);
 
-      if (!authResult.success || !authResult.session) {
-        res
-          .status(401)
-          .json({ error: authResult.error || "Authentication failed" });
-        return;
+      if (!authResult.success || !authResult.session || !authResult) {
+        return sendError(
+          res,
+          authResult.error || "Authentication Failed",
+          401,
+          {
+            error: authResult.error,
+          },
+        );
       }
 
       const cookieOptions = authService.getSessionCookieOptions();
-      res.cookie(
-        "user_session",
-        JSON.stringify(authResult.session),
-        cookieOptions,
-      );
-
       const frontendURL = process.env.FRONTEND_URL || "http://localhost:5173";
-      res.redirect(frontendURL);
-    } catch (error) {
+
+      sendSuccess(
+        res,
+        { user: authResult.session },
+        "Authentication Successful",
+        200,
+        [
+          (res) => {
+            res.cookie(
+              "user_session",
+              JSON.stringify(authResult.session),
+              cookieOptions,
+            );
+          },
+          (res) => res.redirect(`${frontendURL}`),
+        ],
+      );
+    } catch (error: any) {
       console.error("Auth callback error:", error);
-      res.status(500).json({ error: "Authentication failed" });
+      return sendError(
+        res,
+        (error?.message as string) || "Authentication Failed",
+        500,
+        error,
+      );
     }
   },
 };

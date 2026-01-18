@@ -1,44 +1,14 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/lib/auth-context";
 
 const AUTH_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api/auth`
-  : "http://localhost:3000/api/auth";
-
-const checkAuthStatus = async (): Promise<boolean> => {
-  try {
-    const response = await fetch("/api/auth/status", {
-      credentials: "include",
-    });
-    if (!response.ok) return false;
-    const data = await response.json();
-    return data.authenticated || false;
-  } catch {
-    return false;
-  }
-};
+  : "/api/auth";
 
 const Navbar = () => {
-  const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, loading } = useAuth();
 
-  useEffect(() => {
-    checkAuthStatus().then(setIsAuthenticated).finally(() => setIsLoading(false));
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        checkAuthStatus().then(setIsAuthenticated);
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () =>
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, []);
-
-  if (isLoading) {
+  if (loading) {
     return (
       <nav className="fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-sm border-b border-white/5 bg-[#050509]/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -83,7 +53,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          {isAuthenticated ? (
+          {user ? (
             <Link
               to="/dashboard"
               className="h-10 px-4 rounded-xl bg-white text-black text-sm font-medium hover:bg-zinc-200 transition-all flex items-center gap-2"

@@ -1,5 +1,5 @@
-import { Link, useLocation } from "react-router-dom"
-import { cn } from "@/lib/utils"
+import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 import {
   BookOpen,
   Bot,
@@ -7,19 +7,54 @@ import {
   LayoutDashboard,
   MessageSquare,
   Settings,
-} from "lucide-react"
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 
 const SIDEBAR_ITEMS = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Knowledge", href: "/dashboard/knowledge", icon: BookOpen },
   { label: "Sections", href: "/dashboard/sections", icon: Layers },
   { label: "Chatbot", href: "/dashboard/chatbot", icon: Bot },
-  { label: "Conversations", href: "/dashboard/conversations", icon: MessageSquare },
+  {
+    label: "Conversations",
+    href: "/dashboard/conversations",
+    icon: MessageSquare,
+  },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
-]
+];
 
 const Sidebar = () => {
-  const location = useLocation()
+  const location = useLocation();
+  const { user } = useAuth();
+  const [metadata, setMetadata] = useState<any>();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        const response = await fetch("/api/metadata/fetch", {
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          setIsLoading(false);
+          return;
+        }
+
+        const res = await response.json();
+
+        if (res.success && res.data) {
+          setMetadata(res.data);
+        }
+      } catch {
+        // Silently handle errors
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchMetadata();
+  }, []);
 
   return (
     <div className="w-64 border-r border-white/5 bg-[#050509] flex-col h-screen fixed left-0 top-0 z-40 hidden md:flex">
@@ -33,8 +68,8 @@ const Sidebar = () => {
       </Link>
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {SIDEBAR_ITEMS.map((item) => {
-          const isActive = location.pathname === item.href
-          const Icon = item.icon
+          const isActive = location.pathname === item.href;
+          const Icon = item.icon;
           return (
             <Link
               key={item.href}
@@ -49,11 +84,30 @@ const Sidebar = () => {
               <Icon className="w-5 h-5" />
               {item.label}
             </Link>
-          )
+          );
         })}
       </nav>
-    </div>
-  )
-}
 
-export default Sidebar
+      {/* Profile - Bottom Area */}
+      <div className="p-4 border-t border-white/5">
+        <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 cursor-pointer transition-colors group">
+          <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center border border-white/10">
+            <span className="text-xs text-zinc-400 group-hover:text-white">
+              {metadata?.business_name?.slice(0, 2).toUpperCase() || ".."}
+            </span>
+          </div>
+          <div className="flex flex-col overflow-hidden">
+            <span className="text-sm font-medium text-zinc-300 truncate group-hover:text-white">
+              {isLoading
+                ? "Loading..."
+                : `${metadata?.business_name}'s Workspace`}
+            </span>
+            <span className="text-xs text-zinc-500 truncate">{user?.email}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;

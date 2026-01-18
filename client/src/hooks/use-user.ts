@@ -1,28 +1,61 @@
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react";
 
-export const useUser = () => {
-  const [email, setEmail] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+const AUTH_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api/auth`
+  : "/api/auth";
+
+interface User {
+  email: string;
+  organization_id: string;
+}
+
+interface UseUserResult {
+  user: User | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export const useUser = (): UseUserResult => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userSessionCookie = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("user_session="))
-        ?.split("=")[1]
+      try {
+        const response = await fetch(`${AUTH_URL}/status`, {
+          credentials: "include",
+        });
 
-      if (userSessionCookie) {
-        try {
-          const user = JSON.parse(decodeURIComponent(userSessionCookie))
-          setEmail(user.email)
-        } catch {
-          setEmail(null)
+        console.log("RESPONSE: ", response);
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            setUser(null);
+          } else {
+            setError("Failed to fetch user");
+          }
+          setLoading(false);
+          return;
         }
-      }
-      setLoading(false)
-    }
-    fetchUser()
-  }, [])
 
-  return { email, loading }
-}
+        const data = await response.json();
+
+        if (data.authenticated && data.user) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      } catch {
+        setError("Failed to fetch user");
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  return { user, loading, error };
+};
