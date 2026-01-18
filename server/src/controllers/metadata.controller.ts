@@ -66,7 +66,7 @@ export const metadataController = {
 
       if (metadataCookie) {
         console.log("[METADATA] Found metadata cookie");
-        return sendSuccess(
+        sendSuccess(
           res,
           {
             exists: true,
@@ -97,14 +97,16 @@ export const metadataController = {
         });
       }
 
-      console.log("[METADATA] Found metadata in DB:", metaDataResult.data);
+      console.log("[METADATA] Found metadata in DB:", {
+        meta: metaDataResult.data,
+      });
 
-      return sendSuccess(
+      sendSuccess(
         res,
         {
           exists: true,
           source: "database",
-          data: metaDataResult.data,
+          data: metaDataResult,
         },
         "Successfully Fetched MetaData",
         200,
@@ -120,9 +122,14 @@ export const metadataController = {
           },
         ],
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error("Get metadata error:", error);
-      res.status(500).json({ error: "Failed to fetch metadata" });
+      return sendError(
+        res,
+        (error?.message as string) || "Failed to fetch metadata ",
+        500,
+        error,
+      );
     }
   },
 };

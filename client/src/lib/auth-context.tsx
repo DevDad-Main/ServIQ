@@ -1,11 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-  useRef,
-} from "react";
+import { createContext, useContext, useState, useCallback, ReactNode, useRef, useEffect } from "react";
+import { authApi } from "../lib/api";
 
 interface User {
   email: string;
@@ -24,55 +18,60 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const isChecking = useRef(false);
+  const checkAuthRef = useRef(false);
 
-  const checkAuth = async () => {
-    if (isChecking.current) return;
-    isChecking.current = true;
+  const checkAuth = useCallback(async () => {
+    if (checkAuthRef.current) return;
+    checkAuthRef.current = true;
+    setLoading(true);
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/auth/status`,
-        {
-          credentials: "include",
-        },
-      );
+      const response = await authApi.status();
+      const data = response.data as {
+        success: boolean;
+        data?: {
+          authenticated: boolean;
+          user?: User;
+        };
+      };
 
-      if (!response.ok) {
-        setUser(null);
-        return;
-      }
-
-      const data = await response.json();
+      console.log("[AUTH] Status response:", data);
 
       if (data.success && data.data?.authenticated && data.data?.user) {
         setUser(data.data.user);
       } else {
         setUser(null);
       }
-    } catch {
+    } catch (error) {
+      console.error("[AUTH] Error checking auth status:", error);
       setUser(null);
     } finally {
       setLoading(false);
-      isChecking.current = false;
+      checkAuthRef.current = false;
     }
-  };
+  }, []);
 
-  const logout = async () => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (loading) {
+        console.log("[AUTH] Timeout, setting loading to false");
+        setLoading(false);
+      }
+    }, 5000);
+
+    checkAuth();
+
+    return () => clearTimeout(timeout);
+  }, [checkAuth]);
+
+  const logout = useCallback(async () => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      await authApi.logout();
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("[AUTH] Logout error:", error);
     } finally {
       setUser(null);
     }
-  };
-
-  useEffect(() => {
-    checkAuth();
   }, []);
 
   return (

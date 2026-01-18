@@ -10,6 +10,7 @@ import DashboardLayout from "./pages/DashboardLayout"
 import Dashboard from "./pages/Dashboard"
 import PlaceholderPage from "./pages/Placeholder"
 import AuthCallback from "./pages/AuthCallback"
+import SetupPage from "./pages/SetupPage"
 import { AuthProvider } from "./lib/auth-context"
 import { ProtectedRoute } from "./components/ProtectedRoute"
 
@@ -39,6 +40,14 @@ function App() {
             }
           />
           <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route
+            path="/setup"
+            element={
+              <ProtectedRoute>
+                <SetupPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/dashboard/*"
             element={

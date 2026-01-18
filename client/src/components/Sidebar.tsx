@@ -8,8 +8,8 @@ import {
   MessageSquare,
   Settings,
 } from "lucide-react";
-import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
+import { useMetadata } from "@/hooks/useApi";
 
 const SIDEBAR_ITEMS = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -27,34 +27,7 @@ const SIDEBAR_ITEMS = [
 const Sidebar = () => {
   const location = useLocation();
   const { user } = useAuth();
-  const [metadata, setMetadata] = useState<any>();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMetadata = async () => {
-      try {
-        const response = await fetch("/api/metadata/fetch", {
-          credentials: "include",
-        })
-
-        if (!response.ok) {
-          setIsLoading(false)
-          return
-        }
-
-        const res = await response.json()
-
-        if (res.data?.exists) {
-          setMetadata(res.data)
-        }
-      } catch {
-        // Silently handle errors
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    fetchMetadata()
-  }, [])
+  const { metadata, loading } = useMetadata();
 
   return (
     <div className="w-64 border-r border-white/5 bg-[#050509] flex-col h-screen fixed left-0 top-0 z-40 hidden md:flex">
@@ -93,16 +66,20 @@ const Sidebar = () => {
         <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 cursor-pointer transition-colors group">
           <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center border border-white/10">
             <span className="text-xs text-zinc-400 group-hover:text-white">
-              {metadata?.business_name?.slice(0, 2).toUpperCase() || ".."}
+              {loading
+                ? ".."
+                : metadata?.business_name?.slice(0, 2).toUpperCase() || ".."}
             </span>
           </div>
           <div className="flex flex-col overflow-hidden">
             <span className="text-sm font-medium text-zinc-300 truncate group-hover:text-white">
-              {isLoading
+              {loading
                 ? "Loading..."
                 : `${metadata?.business_name}'s Workspace`}
             </span>
-            <span className="text-xs text-zinc-500 truncate">{user?.email}</span>
+            <span className="text-xs text-zinc-500 truncate">
+              {user?.email}
+            </span>
           </div>
         </div>
       </div>

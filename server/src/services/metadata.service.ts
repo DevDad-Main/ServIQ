@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { logger } from "devdad-express-utils";
 
 export interface MetadataInput {
   business_name: string;
@@ -33,7 +34,10 @@ export const metadataService = {
     input: MetadataInput,
   ): Promise<MetadataResult> {
     if (!input.business_name || !input.website_url) {
-      return { success: false, error: "Business name and website URL are required" };
+      return {
+        success: false,
+        error: "Business name and website URL are required",
+      };
     }
 
     try {

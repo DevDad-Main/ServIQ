@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Input } from "./ui/input";
+import { metadataApi } from "@/lib/api";
 
 interface InitialData {
   businessName: string;
@@ -130,25 +131,12 @@ const InitialForm = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/metadata/store`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            business_name: formData.businessName,
-            website_url: formData.websiteURL,
-            external_links: formData.externalLinks,
-          }),
-        },
-      );
-
-      if (response.ok) {
-        navigate("/dashboard", { replace: true });
-      }
+      await metadataApi.store({
+        business_name: formData.businessName,
+        website_url: formData.websiteURL,
+        external_links: formData.externalLinks,
+      });
+      navigate("/dashboard", { replace: true });
     } catch (error) {
       console.error("Failed to submit:", error);
     } finally {
