@@ -19,5 +19,6 @@ router.post(
   knowledgeController.store,
 );
 router.get("/fetch", authMiddleware, knowledgeController.fetch);
+router.delete("/:id", authMiddleware, knowledgeController.delete);
 
 export default router;

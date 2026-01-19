@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import type { AxiosResponse } from "axios";
-import apiClient, { KnowledgeSource, StoreKnowledgeData } from "../lib/api";
+import apiClient from "../lib/api";
+import type { KnowledgeSource } from "@/types/types";
+import type { StoreKnowledgeData } from "../lib/api";
 
 interface UseAxiosOptions<T> {
   immediate?: boolean;
@@ -195,11 +197,13 @@ export function useKnowledge(): UseKnowledgeResult {
       const response = await apiClient.get("/api/knowledge/fetch");
       const responseData = response.data as {
         success: boolean;
-        sources?: KnowledgeSource[];
+        data?: {
+          sources?: KnowledgeSource[];
+        };
       };
 
-      if (responseData.success && responseData.sources) {
-        setSources(responseData.sources);
+      if (responseData.success && responseData.data?.sources) {
+        setSources(responseData.data.sources);
       }
     } catch (err) {
       setError(err instanceof Error ? err : new Error("Failed to fetch knowledge"));
@@ -217,13 +221,11 @@ export function useKnowledge(): UseKnowledgeResult {
         const formData = new FormData();
         formData.append("type", "upload");
         formData.append("file", data.file, data.file.name);
-        console.log("[USE_KNOWLEDGE] Uploading file:", data.file.name, data.file.size, "bytes");
         await apiClient.post("/api/knowledge/store", formData);
       } else {
         await apiClient.post("/api/knowledge/store", data);
       }
     } catch (err) {
-      console.error("[USE_KNOWLEDGE] Upload error:", err);
       setError(err instanceof Error ? err : new Error("Failed to store knowledge"));
       throw err;
     } finally {

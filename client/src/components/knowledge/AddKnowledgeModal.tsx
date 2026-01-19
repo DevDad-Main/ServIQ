@@ -13,6 +13,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import type { KnowledgeSource } from "@/types/types";
 
 const validateURL = (url: string) => {
   try {
@@ -65,9 +66,9 @@ const AddKnowledgeModal = ({
 
       const normalizedInput = websiteURL.replace(/\/$/, "");
       const exists = existingSources.some((source) => {
-        if (source.type !== "website" || !source.source_url) return false;
+        if (source.type !== "website" || !source.sourceUrl) return false;
 
-        const normalizedSource = source.source_url.replace(/\/$/, "");
+        const normalizedSource = source.sourceUrl.replace(/\/$/, "");
         return normalizedSource === normalizedInput;
       });
 

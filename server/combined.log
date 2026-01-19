@@ -1004,3 +1004,5 @@
 {"level":"info","message":"[KNOWLEDGE_STORE] Parsed 1000 rows from CSV","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.176Z"}
 {"level":"info","message":"[KNOWLEDGE_STORE] First 10 results:","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.176Z"}
 {"level":"info","message":"[KNOWLEDGE_STORE] Total rows parsed: 1000","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.176Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:57:17.155Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:57:17.160Z"}

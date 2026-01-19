@@ -1,86 +1,87 @@
 import { AuthRequest } from "@/middleware/auth.middleware";
-import {
-  catchAsync,
-  logger,
-  sendError,
-  sendSuccess,
-} from "devdad-express-utils";
+import { catchAsync, sendError, sendSuccess } from "devdad-express-utils";
 import { Response } from "express";
-import csv from "csv-parser";
-import { Readable } from "stream";
+import { knowledgeService } from "@/services/knowledge.service";
 
 export const knowledgeController = {
   fetch: catchAsync(async (req: AuthRequest, res: Response) => {
-    logger.info("[KNOWLEDGE_FETCH] Called");
-    logger.info("[KNOWLEDGE_FETCH] User:", req.user);
-    return sendSuccess(res, { sources: [] }, "Knowledge sources fetched", 200);
-  }),
-
-  store: catchAsync(async (req: AuthRequest, res: Response) => {
-    logger.info("[KNOWLEDGE_STORE] Content-Type:", {
-      Headers: req.headers["content-type"],
-    });
-    logger.info("[KNOWLEDGE_STORE] req.body:", req.body);
-
     const user = req.user;
-    const csvFile = req.file;
 
     if (!user) {
-      logger.error("[KNOWLEDGE_STORE] No user found!");
       return sendError(res, "Unauthorized", 401);
     }
 
-    logger.info("[KNOWLEDGE_STORE] Processing upload for user:", {
-      user: user.email,
-    });
+    const sources = await knowledgeService.getByUser(user.email);
 
-    if (!csvFile || !csvFile.buffer) {
-      logger.error("[KNOWLEDGE_STORE] No file in request!");
-      return sendError(res, "No file uploaded", 400);
+    return sendSuccess(res, { sources }, "Knowledge sources fetched", 200);
+  }),
+
+  store: catchAsync(async (req: AuthRequest, res: Response) => {
+    const user = req.user;
+    const csvFile = req.file;
+    const { type, url, text } = req.body;
+
+    if (!user) {
+      return sendError(res, "Unauthorized", 401);
     }
 
-    logger.info("[KNOWLEDGE_STORE] File received:", {
-      originalname: csvFile.originalname,
-      mimetype: csvFile.mimetype,
-      size: csvFile.size,
-    });
+    if (type === "upload" && csvFile && csvFile.buffer) {
+      const parsed = await knowledgeService.parseCSV(csvFile.buffer);
+      const source = await knowledgeService.create({
+        type: "upload",
+        userEmail: user.email,
+        title: csvFile.originalname,
+        csvData: parsed.rows,
+      });
 
-    // Parse CSV from memory buffer using stream
-    let results: any = [];
-    await new Promise((resolve, reject) => {
-      const stream = Readable.from(csvFile.buffer);
+      return sendSuccess(
+        res,
+        {
+          source,
+          rowsParsed: parsed.totalRows,
+        },
+        "CSV uploaded and processed",
+        201,
+      );
+    }
 
-      stream
-        .pipe(csv())
-        .on("data", (data) => results.push(data))
-        .on("end", () => {
-          logger.info(
-            `[KNOWLEDGE_STORE] Parsed ${results.length} rows from CSV`,
-          );
-          resolve(results);
-        })
-        .on("error", (error) => {
-          logger.error("[KNOWLEDGE_STORE] CSV parsing error:", error);
-          reject(error);
-        });
-    });
+    if (type === "website" && url) {
+      const scraped = await knowledgeService.scrapeWebsite(url);
+      const source = await knowledgeService.create({
+        type: "website",
+        userEmail: user.email,
+        url,
+        content: scraped.markdown,
+      });
 
-    // Log first 10 results only
-    const first10 = results.slice(0, 10);
-    logger.info("[KNOWLEDGE_STORE] First 10 results:");
-    console.log(JSON.stringify(first10, null, 2));
+      return sendSuccess(res, { source }, "Website scraped and processed", 201);
+    }
 
-    logger.info(`[KNOWLEDGE_STORE] Total rows parsed: ${results.length}`);
+    if (type === "text" && text) {
+      const summarized = await knowledgeService.summarizeContent(text);
+      const source = await knowledgeService.create({
+        type: "text",
+        userEmail: user.email,
+        title: "Text Input",
+        content: summarized,
+      });
 
-    return sendSuccess(
-      res,
-      {
-        message: "File uploaded successfully",
-        file: csvFile.originalname,
-        rowsParsed: results.length,
-      },
-      "Knowledge stored",
-      201,
-    );
+      return sendSuccess(res, { source }, "Text processed", 201);
+    }
+
+    return sendError(res, "Invalid request", 400);
+  }),
+
+  delete: catchAsync(async (req: AuthRequest, res: Response) => {
+    const user = req.user;
+    const { id } = req.params;
+
+    if (!user) {
+      return sendError(res, "Unauthorized", 401);
+    }
+
+    await knowledgeService.delete(id, user.email);
+
+    return sendSuccess(res, null, "Knowledge source deleted", 200);
   }),
 };
