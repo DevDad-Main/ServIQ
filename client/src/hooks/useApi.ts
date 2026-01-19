@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import type { AxiosResponse } from "axios";
-import apiClient from "../lib/api";
+import apiClient, { KnowledgeSource, StoreKnowledgeData } from "../lib/api";
 
 interface UseAxiosOptions<T> {
   immediate?: boolean;
@@ -172,4 +172,59 @@ export function useMetadata() {
   }, [fetchMetadata]);
 
   return { metadata, loading, error, refetch: fetchMetadata };
+}
+
+export interface UseKnowledgeResult {
+  sources: KnowledgeSource[];
+  loading: boolean;
+  error: Error | null;
+  fetchSources: () => Promise<void>;
+  storeKnowledge: (data: StoreKnowledgeData) => Promise<void>;
+}
+
+export function useKnowledge(): UseKnowledgeResult {
+  const [sources, setSources] = useState<KnowledgeSource[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchSources = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await apiClient.get("/api/knowledge/fetch");
+      const responseData = response.data as {
+        success: boolean;
+        sources?: KnowledgeSource[];
+      };
+
+      if (responseData.success && responseData.sources) {
+        setSources(responseData.sources);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Failed to fetch knowledge"));
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const storeKnowledge = useCallback(async (data: StoreKnowledgeData) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await apiClient.post("/api/knowledge/store", data);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Failed to store knowledge"));
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchSources();
+  }, [fetchSources]);
+
+  return { sources, loading, error, fetchSources, storeKnowledge };
 }

@@ -1,12 +1,15 @@
 import { useAuth } from "../lib/auth-context";
 import { useMetadata } from "../hooks/useApi";
+import { useToast } from "@/lib/toast";
 
 const Dashboard = () => {
   const { user } = useAuth();
   const { metadata, loading, error, refetch } = useMetadata();
+  const { success } = useToast();
 
   const handleRefresh = async () => {
     await refetch();
+    success("Dashboard refreshed");
   };
 
   if (loading) {

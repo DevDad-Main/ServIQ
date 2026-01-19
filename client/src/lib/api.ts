@@ -48,4 +48,38 @@ export const metadataApi = {
     apiClient.post("/api/metadata/store", data),
 };
 
+export interface KnowledgeSource {
+  id: string;
+  type: string;
+  source_url?: string;
+  title?: string;
+  content?: string;
+  file_name?: string;
+  status: string;
+  created_at: string;
+}
+
+export interface StoreKnowledgeData {
+  type: "website" | "text" | "upload";
+  url?: string;
+  title?: string;
+  content?: string;
+  file?: File;
+}
+
+export const knowledgeApi = {
+  fetch: () => apiClient.get<{ success: boolean; sources: KnowledgeSource[] }>("/api/knowledge/fetch"),
+  store: async (data: StoreKnowledgeData) => {
+    if (data.type === "upload" && data.file) {
+      const formData = new FormData();
+      formData.append("type", "upload");
+      formData.append("file", data.file);
+      return apiClient.post("/api/knowledge/store", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    }
+    return apiClient.post("/api/knowledge/store", data);
+  },
+};
+
 export default apiClient;

@@ -14,6 +14,7 @@ import SetupPage from "./pages/SetupPage";
 import { AuthProvider } from "./lib/auth-context";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import KnowledgePage from "./pages/KnowledgePage";
+import { ToastProvider } from "./lib/toast";
 
 const LandingPage = () => (
   <div className="w-full flex flex-col relative z-10">
@@ -29,57 +30,59 @@ const LandingPage = () => (
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Navbar />
-                <LandingPage />
-              </>
-            }
-          />
-          <Route path="/auth/callback" element={<AuthCallback />} />
-          <Route
-            path="/setup"
-            element={
-              <ProtectedRoute>
-                <SetupPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard/*"
-            element={
-              <ProtectedRoute>
-                <DashboardLayout>
-                  <Routes>
-                    <Route index element={<Dashboard />} />
-                    <Route path="knowledge" element={<KnowledgePage />} />
-                    <Route
-                      path="sections"
-                      element={<PlaceholderPage title="Sections" />}
-                    />
-                    <Route
-                      path="chatbot"
-                      element={<PlaceholderPage title="Chatbot" />}
-                    />
-                    <Route
-                      path="conversations"
-                      element={<PlaceholderPage title="Conversations" />}
-                    />
-                    <Route
-                      path="settings"
-                      element={<PlaceholderPage title="Settings" />}
-                    />
-                  </Routes>
-                </DashboardLayout>
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </AuthProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Navbar />
+                  <LandingPage />
+                </>
+              }
+            />
+            <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route
+              path="/setup"
+              element={
+                <ProtectedRoute>
+                  <SetupPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/*"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <Routes>
+                      <Route index element={<Dashboard />} />
+                      <Route path="knowledge" element={<KnowledgePage />} />
+                      <Route
+                        path="sections"
+                        element={<PlaceholderPage title="Sections" />}
+                      />
+                      <Route
+                        path="chatbot"
+                        element={<PlaceholderPage title="Chatbot" />}
+                      />
+                      <Route
+                        path="conversations"
+                        element={<PlaceholderPage title="Conversations" />}
+                      />
+                      <Route
+                        path="settings"
+                        element={<PlaceholderPage title="Settings" />}
+                      />
+                    </Routes>
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </AuthProvider>
+      </ToastProvider>
     </BrowserRouter>
   );
 }

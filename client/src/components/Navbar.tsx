@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth-context";
+import { useToast } from "@/lib/toast";
 
 const AUTH_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api/auth`
@@ -8,11 +9,15 @@ const AUTH_URL = import.meta.env.VITE_API_URL
 
 const Navbar = () => {
   const { user, loading, logout } = useAuth();
+  const { success } = useToast();
+  const navigate = useNavigate();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
     await logout();
+    success("Successfully signed out");
+    navigate("/", { replace: true });
     setIsLoggingOut(false);
   };
 

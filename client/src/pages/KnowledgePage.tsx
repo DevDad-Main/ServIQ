@@ -2,23 +2,33 @@ import AddKnowledgeModal from "@/components/knowledge/AddKnowledgeModal";
 import QuickActions from "@/components/knowledge/QuickActions";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useKnowledge } from "@/hooks/useApi";
+import { useToast } from "@/lib/toast";
 
 const KnowledgePage = () => {
   const [defaultTab, setDefaultTab] = useState("website");
   const [isAddOpen, setIsAddOpen] = useState(false);
-  const [knowledgeStoringLoader, setKnowledgeStoringLoader] = useState(false);
-  const [knowledgeSourcesLoader, setKnowledgeSourcesLoader] = useState(false);
-  const [knowledgeSources, setKnowledgeSources] = useState<KnowledgeSource[]>(
-    [],
-  );
+  const { sources, loading, storeKnowledge } = useKnowledge();
+  const { success, error } = useToast();
 
   const openModal = (tab: string) => {
     setDefaultTab(tab);
     setIsAddOpen(true);
   };
 
-  const handleImportSource = async (data: any) => {};
+  const handleImportSource = async (data: any) => {
+    try {
+      await storeKnowledge(data);
+      success("Knowledge source added successfully");
+
+      if (data.type === "upload") {
+        setIsAddOpen(false);
+      }
+    } catch (err) {
+      error("Failed to add knowledge source");
+    }
+  };
 
   return (
     <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto animate-in fade-in duration-500">
@@ -53,8 +63,8 @@ const KnowledgePage = () => {
         defaultTab={defaultTab}
         setDefaultTab={setDefaultTab}
         onImport={handleImportSource}
-        isLoading={knowledgeStoringLoader}
-        existingSources={knowledgeSources}
+        isLoading={loading}
+        existingSources={sources}
       />
     </div>
   );

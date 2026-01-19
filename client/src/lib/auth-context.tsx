@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, ReactNode, useRef, useEffect } from "react";
 import { authApi } from "../lib/api";
+import { useToast } from "../lib/toast";
 
 interface User {
   email: string;
@@ -72,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setUser(null);
     }
-  }, []);
+  }, [useToast]);
 
   return (
     <AuthContext.Provider value={{ user, loading, checkAuth, logout }}>

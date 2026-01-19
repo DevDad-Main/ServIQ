@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
-import authRoutes from "./routes/auth/auth.routes";
-import metadataRoutes from "./routes/metadata/metadata.routes";
+import authRoutes from "@/routes/auth/auth.routes";
+import metadataRoutes from "@/routes/metadata/metadata.routes";
+import knowledgeRoutes from "@/routes/knowledge/knowledge.routes";
 import { logger } from "devdad-express-utils";
 
 const app = express();
@@ -26,5 +27,6 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/metadata", metadataRoutes);
+app.use("/api/knowledge", knowledgeRoutes);
 
 export default app;
