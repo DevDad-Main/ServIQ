@@ -779,3 +779,228 @@
 {"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_STORE] User from middleware:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T18:53:13.421Z"}
 {"0":"s","1":"o","10":"v","11":"d","12":"a","13":"d","14":"@","15":"g","16":"m","17":"a","18":"i","19":"l","2":"f","20":".","21":"c","22":"o","23":"m","3":"t","4":"w","5":"a","6":"r","7":"e","8":"d","9":"e","level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T18:53:13.421Z"}
 {"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T18:53:13.421Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T19:06:13.956Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T19:06:13.958Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T19:06:13.958Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T19:06:13.958Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:09:49.960Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T19:09:49.961Z"}
+{"URL":"/callback?code=FsoWN5R8PenIOh64eDrsWwBCjJl2G4nyrtfqssCNDXbwqAeqiCM&state=cd7e3cb3fb1995e19b44312ecda52df8","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T19:09:54.056Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:09:57.781Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:10:00.344Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:10:02.128Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:10:02.129Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:10:02.130Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:10:02.130Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundaryc0d5184cb1c383afbf7364765bc086","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T19:10:11.561Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T19:10:11.562Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T19:10:11.563Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T19:10:11.563Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:12:08.778Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T19:12:08.778Z"}
+{"URL":"/callback?code=0oN8w-biLDxqxxiY5jEfjHp8RiTFXzYbeEktcq0nd2Y2Pie8p5M&state=9550cb54939517f0bfee5421c7fc120a","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T19:12:14.047Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:12:15.180Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:12:19.075Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:12:20.864Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:12:20.864Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:12:20.865Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:12:20.865Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary29f1e7655054ec0f4a85496524b56322","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T19:12:28.028Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T19:12:28.028Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T19:12:28.028Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T19:12:28.028Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T19:12:44.079Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T19:12:44.081Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T19:12:44.082Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T19:12:44.082Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:12:47.950Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:12:48.770Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:12:48.771Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:12:48.774Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:12:48.775Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary1819a3fa89a6ec5670e35195e7874f1","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T19:12:56.298Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T19:12:56.298Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T19:12:56.299Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T19:12:56.299Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File processed successfully","results":[],"service":"serviq-saas","timestamp":"2026-01-19T19:12:56.301Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:13:48.231Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T19:13:48.231Z"}
+{"URL":"/callback?code=tzXZcH1HIMudwRBs3CBo5DShdaS5fXueEnq1Ui6WhN2Xju4JkGc&state=c70cf3d19932b2dc4ac57c2cae9aa6e5","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T19:13:54.292Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:13:56.231Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:14:00.988Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:14:02.386Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:14:02.387Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:14:02.387Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:14:02.387Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary39b1178990845fc8703ad87f5fa6bc","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T19:14:10.363Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T19:14:10.363Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T19:14:10.364Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T19:14:10.364Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File processed successfully","results":[],"service":"serviq-saas","timestamp":"2026-01-19T19:14:10.364Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T19:14:31.106Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T19:14:31.108Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T19:14:31.109Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T19:14:31.109Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:14:32.687Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:14:33.160Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:14:33.160Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:14:33.165Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:14:33.166Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundaryaae9a9dbc4cb99638f42746ab89a63ed","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T19:14:41.456Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T19:14:41.456Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T19:14:41.456Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T19:14:41.456Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File processed successfully","results":[],"service":"serviq-saas","timestamp":"2026-01-19T19:14:41.457Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T19:17:53.479Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T19:17:53.481Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T19:17:53.482Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T19:17:53.482Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T19:18:03.399Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T19:18:03.401Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T19:18:03.402Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T19:18:03.402Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:18:05.971Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T19:18:05.972Z"}
+{"URL":"/callback?code=CxJZ1Sjwum0ZhNiB8LsdZIx2IW13Tp3VFq4U8lOfXlyoFIR5gao&state=23b85a9b8842bc166fda07bd714d92c6","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T19:18:17.439Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:18:19.495Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:18:23.466Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:18:25.340Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:18:25.340Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:18:25.341Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:18:25.341Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary1a749fc80b7659b96325fd8d2859d1d9","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T19:18:33.448Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T19:18:33.448Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T19:18:33.449Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T19:18:33.449Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T19:20:38.824Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T19:20:38.826Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T19:20:38.826Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T19:20:38.826Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:20:49.893Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T19:20:49.894Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:20:51.470Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T19:20:51.471Z"}
+{"URL":"/callback?code=U4Xj_l2-GcU6MY7CpTE5cQIuZtaacMTlJNi9wSWxJygMozJIK3k&state=5723099bf541812303f5ce5db2e264db","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T19:20:56.293Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:21:01.161Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T19:21:04.410Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:21:05.978Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:21:05.978Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T19:21:05.979Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T19:21:05.980Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary9c7ce76be40ced68d9c4cb51a4b4e4f4","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T19:21:15.077Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T19:21:15.077Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T19:21:15.077Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T19:21:15.077Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T20:21:43.399Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T20:21:43.402Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T20:21:43.402Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T20:21:43.403Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:21:47.684Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:21:47.685Z"}
+{"URL":"/callback?code=R-kYEBzkP3r09-chqNEJs3LI2RwJ5HnO0GgUd6dBjVM-05e7Cy4&state=b5ccff22f70d0c7811cd1ee760cd51d7","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T20:21:51.724Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:21:53.987Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:21:58.639Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:22:01.054Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:22:01.054Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:22:01.055Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:22:01.055Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary41e6fc61ac05b15c3cc285ae6dbbeb52","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T20:22:10.477Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T20:22:10.477Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T20:22:10.477Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T20:22:10.477Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] CSV parsing error: Cannot access 'results' before initialization","service":"serviq-saas","stack":"ReferenceError: Cannot access 'results' before initialization\n    at CsvParser.<anonymous> (/home/devdad/Olly/ServIQ/server/src/controllers/knowledge.controller.ts:54:39)\n    at CsvParser.emit (node:events:508:28)\n    at addChunk (node:internal/streams/readable:559:12)\n    at readableAddChunkPushObjectMode (node:internal/streams/readable:536:3)\n    at Readable.push (node:internal/streams/readable:391:5)\n    at CsvParser.writeRow (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:200:12)\n    at CsvParser.parseLine (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:170:14)\n    at CsvParser._transform (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:262:16)\n    at Transform._write (node:internal/streams/transform:171:8)\n    at writeOrBuffer (node:internal/streams/writable:570:12)","timestamp":"2026-01-19T20:22:10.480Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:23:33.577Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:23:33.577Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:23:36.811Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:23:36.811Z"}
+{"URL":"/callback?code=tyYs1if_E-KaWtE3n3D0UCRuzBPa9-UME9YzlcRaZQ54GiGg9aw&state=c162a31b6c60f4fb7dad397833a91c41","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T20:23:40.374Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:23:42.045Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:23:45.512Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:23:47.382Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:23:47.382Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:23:47.383Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:23:47.383Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary4813ffc5ebc3eaadc729ca34af6704f1","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T20:23:55.687Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T20:23:55.687Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T20:23:55.687Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T20:23:55.687Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] CSV parsing error: Cannot access 'results' before initialization","service":"serviq-saas","stack":"ReferenceError: Cannot access 'results' before initialization\n    at CsvParser.<anonymous> (/home/devdad/Olly/ServIQ/server/src/controllers/knowledge.controller.ts:54:39)\n    at CsvParser.emit (node:events:508:28)\n    at addChunk (node:internal/streams/readable:559:12)\n    at readableAddChunkPushObjectMode (node:internal/streams/readable:536:3)\n    at Readable.push (node:internal/streams/readable:391:5)\n    at CsvParser.writeRow (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:200:12)\n    at CsvParser.parseLine (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:170:14)\n    at CsvParser._transform (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:262:16)\n    at Transform._write (node:internal/streams/transform:171:8)\n    at writeOrBuffer (node:internal/streams/writable:570:12)","timestamp":"2026-01-19T20:23:55.689Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:24:52.050Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:24:52.308Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:24:52.308Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:24:52.318Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:24:52.318Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:24:56.067Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:24:56.323Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:24:56.323Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:24:56.324Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:24:56.324Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary3bcd6a114391bc1133453684263ffd5d","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T20:25:03.360Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T20:25:03.360Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T20:25:03.360Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T20:25:03.360Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] CSV parsing error: Cannot access 'results' before initialization","service":"serviq-saas","stack":"ReferenceError: Cannot access 'results' before initialization\n    at CsvParser.<anonymous> (/home/devdad/Olly/ServIQ/server/src/controllers/knowledge.controller.ts:54:39)\n    at CsvParser.emit (node:events:508:28)\n    at addChunk (node:internal/streams/readable:559:12)\n    at readableAddChunkPushObjectMode (node:internal/streams/readable:536:3)\n    at Readable.push (node:internal/streams/readable:391:5)\n    at CsvParser.writeRow (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:200:12)\n    at CsvParser.parseLine (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:170:14)\n    at CsvParser._transform (/home/devdad/Olly/ServIQ/server/node_modules/csv-parser/index.js:262:16)\n    at Transform._write (node:internal/streams/transform:171:8)\n    at writeOrBuffer (node:internal/streams/writable:570:12)","timestamp":"2026-01-19T20:25:03.361Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:25:05.456Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:25:05.738Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:25:05.738Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:25:05.739Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:25:05.739Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:25:06.492Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:25:06.792Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:25:06.793Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:25:06.793Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:25:06.794Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T20:25:13.651Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T20:25:13.654Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T20:25:13.654Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T20:25:13.658Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:25:14.483Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:25:14.484Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:25:15.990Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:25:15.990Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:25:17.169Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:25:17.170Z"}
+{"URL":"/callback?code=gmaWwFzKqpMTYT9u2lP1Zhrs3utGiYtaWIPf2-QmBLpmMz80DkI&state=6c620cbd19223d1b76a3c5e967e15e48","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T20:25:21.138Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:25:23.764Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:25:26.986Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:25:28.521Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:25:28.521Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:25:28.523Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:25:28.523Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundary56843822b40175e751d62a85b59474f1","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T20:25:35.794Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T20:25:35.795Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T20:25:35.795Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T20:25:35.795Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Parsed 1000 rows from CSV","service":"serviq-saas","timestamp":"2026-01-19T20:25:35.805Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] First 10 results:","service":"serviq-saas","timestamp":"2026-01-19T20:25:35.805Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Total rows parsed: 1000","service":"serviq-saas","timestamp":"2026-01-19T20:25:35.806Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-19T20:26:42.056Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-19T20:26:42.058Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-19T20:26:42.058Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-19T20:26:42.058Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:26:43.921Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:26:44.714Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:26:44.715Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:26:44.717Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:26:44.718Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:26:45.977Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:26:46.257Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:26:46.258Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:26:46.259Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:26:46.260Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:27:00.850Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:27:00.850Z"}
+{"URL":"/callback?code=XoT5FjyV7IbULV_PCJJmmk53-exWLZzAFoTL2QK0BAEx4zeIU8s&state=88448af6ad26f9bf76eb2af04ed59e1b","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-19T20:27:06.162Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:27:07.656Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:27:11.154Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:27:12.926Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:27:12.927Z"}
+{"level":"info","message":"[KNOWLEDGE_FETCH] Called","service":"serviq-saas","timestamp":"2026-01-19T20:27:12.929Z"}
+{"email":"softwaredevdad@gmail.com","level":"info","message":"[KNOWLEDGE_FETCH] User:","organization_id":"org_108554582086386702","service":"serviq-saas","timestamp":"2026-01-19T20:27:12.929Z"}
+{"Headers":"multipart/form-data; boundary=----geckoformboundaryac53c47677a249618b6e47405c29b1a2","level":"info","message":"[KNOWLEDGE_STORE] Content-Type:","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.167Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] req.body:","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.168Z","type":"upload"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Processing upload for user:","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.168Z","user":"softwaredevdad@gmail.com"}
+{"level":"info","message":"[KNOWLEDGE_STORE] File received:","mimetype":"text/csv","originalname":"MOCK_DATA.csv","service":"serviq-saas","size":62407,"timestamp":"2026-01-19T20:27:22.168Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Parsed 1000 rows from CSV","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.176Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] First 10 results:","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.176Z"}
+{"level":"info","message":"[KNOWLEDGE_STORE] Total rows parsed: 1000","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.176Z"}
