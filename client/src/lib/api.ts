@@ -3,11 +3,9 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosE
 const API_URL = import.meta.env.VITE_API_URL || "";
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: API_URL || undefined,
   withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: API_URL ? { "Content-Type": "application/json" } : undefined,
 });
 
 apiClient.interceptors.request.use(

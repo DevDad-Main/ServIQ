@@ -5,6 +5,7 @@ import { Response } from "express";
 export const knowledgeController = {
   fetch: catchAsync(async (req: AuthRequest, res: Response) => {}),
   store: catchAsync(async (req: AuthRequest, res: Response) => {
+    logger.info("[DEBUG]: req.body = ", req.body);
     const user = req.user;
 
     if (!user) {
@@ -15,7 +16,5 @@ export const knowledgeController = {
       });
       return sendError(res, "No User Found", 401);
     }
-
-    logger.info("[DEBUG]: req.body = ", req.body);
   }),
 };
