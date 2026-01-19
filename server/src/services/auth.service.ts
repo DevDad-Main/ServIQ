@@ -166,11 +166,19 @@ export const authService = {
 
   getSessionCookieOptions() {
     const isProduction = process.env.NODE_ENV === "production";
+    if (isProduction) {
+      return {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none" as const,
+        maxAge: 60 * 60 * 24 * 1,
+      };
+    }
     return {
       httpOnly: true,
-      secure: isProduction,
-      sameSite: (isProduction ? "none" : "lax") as "none" | "lax",
+      secure: false,
       maxAge: 60 * 60 * 24 * 1,
+      domain: "localhost",
     };
   },
 };

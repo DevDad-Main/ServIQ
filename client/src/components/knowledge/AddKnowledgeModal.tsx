@@ -255,6 +255,7 @@ const AddKnowledgeModal = ({
                       setError("Only CSV files are allowed.");
                       return;
                     }
+
                     setUploadedFile(file);
                     setError(null);
                   }

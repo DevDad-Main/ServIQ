@@ -6,6 +6,7 @@ export interface AuthRequest extends Request {
     email: string;
     organization_id: string;
   };
+  file?: Express.Multer.File;
 }
 
 export const isUserAuthorized = async (

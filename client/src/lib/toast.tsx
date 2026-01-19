@@ -1,5 +1,10 @@
 import { createContext, useContext, useCallback, ReactNode } from "react";
-import { Toaster, toast, ToastOptions } from "sonner";
+import { Toaster, toast } from "sonner";
+
+interface ToastOptions {
+  style?: React.CSSProperties;
+  className?: string;
+}
 
 interface ToastContextType {
   success: (message: string, options?: ToastOptions) => void;

@@ -1,0 +1,10 @@
+{"PATH":"/store","URL":"/store","level":"error","message":"No User Found","service":"serviq-saas","timestamp":"2026-01-19T18:21:00.743Z"}
+{"PATH":"/store","URL":"/store","level":"error","message":"No User Found","service":"serviq-saas","timestamp":"2026-01-19T18:21:37.065Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] No user found!","service":"serviq-saas","timestamp":"2026-01-19T18:35:31.680Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] No user found!","service":"serviq-saas","timestamp":"2026-01-19T18:36:05.457Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] No user found!","service":"serviq-saas","timestamp":"2026-01-19T18:36:34.904Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] No user found!","service":"serviq-saas","timestamp":"2026-01-19T18:36:46.462Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] No file in request!","service":"serviq-saas","timestamp":"2026-01-19T18:37:14.749Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] No file in request!","service":"serviq-saas","timestamp":"2026-01-19T18:39:42.411Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] No file in request!","service":"serviq-saas","timestamp":"2026-01-19T18:41:13.896Z"}
+{"level":"error","message":"[KNOWLEDGE_STORE] No file in request!","service":"serviq-saas","timestamp":"2026-01-19T18:47:31.903Z"}

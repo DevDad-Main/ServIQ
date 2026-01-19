@@ -213,8 +213,17 @@ export function useKnowledge(): UseKnowledgeResult {
     setError(null);
 
     try {
-      await apiClient.post("/api/knowledge/store", data);
+      if (data.type === "upload" && data.file) {
+        const formData = new FormData();
+        formData.append("type", "upload");
+        formData.append("file", data.file, data.file.name);
+        console.log("[USE_KNOWLEDGE] Uploading file:", data.file.name, data.file.size, "bytes");
+        await apiClient.post("/api/knowledge/store", formData);
+      } else {
+        await apiClient.post("/api/knowledge/store", data);
+      }
     } catch (err) {
+      console.error("[USE_KNOWLEDGE] Upload error:", err);
       setError(err instanceof Error ? err : new Error("Failed to store knowledge"));
       throw err;
     } finally {

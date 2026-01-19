@@ -17,13 +17,17 @@ app.use(
 );
 
 app.use(cookieParser());
-app.use(express.json());
 
-// app.use((req, res, next) => {
-//   logger.info(`PATH: ${req.path} URL: ${req.url}`);
+// Skip JSON parsing for multipart/form-data requests (file uploads)
+app.use((req, res, next) => {
+  if (req.headers["content-type"]?.includes("multipart/form-data")) {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
-//   next();
-// });
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/metadata", metadataRoutes);

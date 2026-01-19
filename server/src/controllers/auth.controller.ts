@@ -44,12 +44,21 @@ export const authController = {
       const state = authService.generateState();
       const isProduction = process.env.NODE_ENV === "production";
 
-      res.cookie("sk_state", state, {
-        httpOnly: true,
-        secure: isProduction,
-        sameSite: isProduction ? ("none" as const) : ("lax" as const),
-        path: "/",
-      });
+      if (isProduction) {
+        res.cookie("sk_state", state, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none" as const,
+          path: "/",
+        });
+      } else {
+        res.cookie("sk_state", state, {
+          httpOnly: true,
+          secure: false,
+          path: "/",
+          domain: "localhost",
+        });
+      }
 
       const options = authService.getInitiateOptions(state);
       const authorizationURL = authService.getAuthorizationUrl(options);
@@ -89,8 +98,9 @@ export const authController = {
       if (!code) {
         res.clearCookie("sk_state", {
           httpOnly: true,
-          sameSite: "none",
+          secure: false,
           path: "/",
+          domain: "localhost",
         });
         return sendError(res, "No authorization code found", 400);
       }
@@ -98,16 +108,18 @@ export const authController = {
       if (!state || state !== req.cookies.sk_state) {
         res.clearCookie("sk_state", {
           httpOnly: true,
-          sameSite: "none",
+          secure: false,
           path: "/",
+          domain: "localhost",
         });
         return sendError(res, "Invalid state parameter", 400);
       }
 
       res.clearCookie("sk_state", {
         httpOnly: true,
-        sameSite: "none",
+        secure: false,
         path: "/",
+        domain: "localhost",
       });
 
       const authResult = await authService.authenticateWithCode(code);
@@ -155,17 +167,35 @@ export const authController = {
 
   logout: async (_req: AuthRequest, res: Response): Promise<void> => {
     const isProduction = process.env.NODE_ENV === "production";
-    res.clearCookie("user_session", {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? "none" : "lax",
-      path: "/",
-    });
-    res.clearCookie("sk_state", {
-      httpOnly: true,
-      sameSite: "none" as const,
-      path: "/",
-    });
+    
+    if (isProduction) {
+      res.clearCookie("user_session", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none" as const,
+        path: "/",
+      });
+      res.clearCookie("sk_state", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none" as const,
+        path: "/",
+      });
+    } else {
+      res.clearCookie("user_session", {
+        httpOnly: true,
+        secure: false,
+        path: "/",
+        domain: "localhost",
+      });
+      res.clearCookie("sk_state", {
+        httpOnly: true,
+        secure: false,
+        path: "/",
+        domain: "localhost",
+      });
+    }
+    
     sendSuccess(res, null, "Logged out successfully", 200);
   },
 };

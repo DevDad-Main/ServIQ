@@ -27,6 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(true);
 
     try {
+      console.log("[AUTH] Checking auth status...");
       const response = await authApi.status();
       const data = response.data as {
         success: boolean;
@@ -40,8 +41,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (data.success && data.data?.authenticated && data.data?.user) {
         setUser(data.data.user);
+        console.log("[AUTH] User authenticated:", data.data.user.email);
       } else {
         setUser(null);
+        console.log("[AUTH] Not authenticated");
       }
     } catch (error) {
       console.error("[AUTH] Error checking auth status:", error);
@@ -73,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setUser(null);
     }
-  }, [useToast]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, loading, checkAuth, logout }}>

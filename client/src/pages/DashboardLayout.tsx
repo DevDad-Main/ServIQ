@@ -1,4 +1,5 @@
 import Sidebar from "../components/Sidebar"
+import DashboardLoader from "@/components/DashboardLoader"
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -6,7 +7,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <>
         <Sidebar />
         <div className="flex-1 flex flex-col md:ml-64 relative min-h-screen transition-all duration-300">
-          <main className="flex-1">{children}</main>
+          <DashboardLoader>{children}</DashboardLoader>
         </div>
       </>
     </div>
