@@ -1,5 +1,5 @@
 import { File, Globe, Upload } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const QuickActions = ({
   onOpenModal,
