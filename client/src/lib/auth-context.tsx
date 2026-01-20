@@ -1,11 +1,7 @@
 import { createContext, useContext, useState, useCallback, ReactNode, useRef, useEffect } from "react";
 import { authApi } from "../lib/api";
 import { useToast } from "../lib/toast";
-
-interface User {
-  email: string;
-  organization_id: string;
-}
+import type { User } from "../types/types";
 
 interface AuthContextType {
   user: User | null;

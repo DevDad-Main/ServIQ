@@ -12,3 +12,14 @@ export interface KnowledgeSource {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface User {
+  email: string;
+  organization_id: string;
+}
+
+export interface Metadata {
+  business_name: string;
+  website_url: string;
+  external_links?: string;
+}

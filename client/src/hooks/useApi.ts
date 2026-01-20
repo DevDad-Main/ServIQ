@@ -96,33 +96,40 @@ export function useKnowledge(): UseKnowledgeResult {
         setSources(responseData.data.sources);
       }
     } catch (err) {
-      setError(err instanceof Error ? err : new Error("Failed to fetch knowledge"));
+      setError(
+        err instanceof Error ? err : new Error("Failed to fetch knowledge"),
+      );
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const storeKnowledge = useCallback(async (data: StoreKnowledgeData) => {
-    setLoading(true);
-    setError(null);
+  const storeKnowledge = useCallback(
+    async (data: StoreKnowledgeData) => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      if (data.type === "upload" && data.file) {
-        const formData = new FormData();
-        formData.append("type", "upload");
-        formData.append("file", data.file, data.file.name);
-        await apiClient.post("/api/knowledge/store", formData);
-      } else {
-        await apiClient.post("/api/knowledge/store", data);
+      try {
+        if (data.type === "upload" && data.file) {
+          const formData = new FormData();
+          formData.append("type", "upload");
+          formData.append("file", data.file, data.file.name);
+          await apiClient.post("/api/knowledge/store", formData);
+        } else {
+          await apiClient.post("/api/knowledge/store", data);
+        }
+        await fetchSources();
+      } catch (err) {
+        setError(
+          err instanceof Error ? err : new Error("Failed to store knowledge"),
+        );
+        throw err;
+      } finally {
+        setLoading(false);
       }
-      await fetchSources();
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error("Failed to store knowledge"));
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [fetchSources]);
+    },
+    [fetchSources],
+  );
 
   const deleteKnowledge = useCallback(async (id: string) => {
     setLoading(true);
@@ -132,7 +139,9 @@ export function useKnowledge(): UseKnowledgeResult {
       await apiClient.delete(`/api/knowledge/${id}`);
       setSources((prev) => prev.filter((s) => s.id !== id));
     } catch (err) {
-      setError(err instanceof Error ? err : new Error("Failed to delete knowledge"));
+      setError(
+        err instanceof Error ? err : new Error("Failed to delete knowledge"),
+      );
       throw err;
     } finally {
       setLoading(false);
@@ -143,5 +152,12 @@ export function useKnowledge(): UseKnowledgeResult {
     fetchSources();
   }, [fetchSources]);
 
-  return { sources, loading, error, fetchSources, storeKnowledge, deleteKnowledge };
+  return {
+    sources,
+    loading,
+    error,
+    fetchSources,
+    storeKnowledge,
+    deleteKnowledge,
+  };
 }

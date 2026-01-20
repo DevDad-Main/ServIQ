@@ -152,39 +152,22 @@ export const authController = {
     }
   },
 
-  logout: async (_req: AuthRequest, res: Response): Promise<void> => {
-    const isProduction = process.env.NODE_ENV === "production";
-
-    if (isProduction) {
-      res.clearCookie("user_session", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none" as const,
-        path: "/",
-      });
-      res.clearCookie("sk_state", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none" as const,
-        path: "/",
-      });
-    } else {
-      res.clearCookie("user_session", {
-        httpOnly: true,
-        secure: false,
-        sameSite: false as const,
-        path: "/",
-        domain: "localhost",
-      });
-      res.clearCookie("sk_state", {
-        httpOnly: true,
-        secure: false,
-        sameSite: false as const,
-        path: "/",
-        domain: "localhost",
-      });
-    }
-
-    sendSuccess(res, null, "Logged out successfully", 200);
+  logout: (_req: AuthRequest, res: Response): void => {
+    sendSuccess(res, {}, "Logged out successfully", 200, [
+      (res) =>
+        res.clearCookie("user_session", {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none" as const,
+          path: "/",
+        }),
+      (res) =>
+        res.clearCookie("sk_state", {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none" as const,
+          path: "/",
+        }),
+    ]);
   },
 };

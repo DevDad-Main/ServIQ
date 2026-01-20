@@ -1,16 +1,6 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode, useRef } from "react";
 import apiClient from "../lib/api";
-
-interface User {
-  email: string;
-  organization_id: string;
-}
-
-interface Metadata {
-  business_name: string;
-  website_url: string;
-  external_links?: string;
-}
+import type { User, Metadata } from "../types/types";
 
 interface AppContextType {
   user: User | null;
@@ -29,19 +19,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [metadata, setMetadata] = useState<Metadata | null>(null);
   const [loading, setLoading] = useState(true);
   const [initialized, setInitialized] = useState(false);
-  const initRef = useRef(false);
+  const checkedRef = useRef(false);
 
   const checkAuth = useCallback(async () => {
-    if (initRef.current) return;
-    initRef.current = true;
+    if (checkedRef.current) return;
+    checkedRef.current = true;
 
     setLoading(true);
 
     try {
-      const [authRes, metadataRes] = await Promise.all([
-        apiClient.get("/api/auth/status"),
-        apiClient.get("/api/metadata/fetch"),
-      ]);
+      const authRes = await apiClient.get("/api/auth/status");
 
       const authData = authRes.data as {
         success: boolean;
@@ -51,19 +38,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
         };
       };
 
-      const metadataData = metadataRes.data as {
-        success: boolean;
-        data?: {
-          exists: boolean;
-          data?: Metadata;
-        };
-      };
-
       if (authData.success && authData.data?.authenticated && authData.data?.user) {
         setUser(authData.data.user);
       } else {
         setUser(null);
       }
+    } catch (error) {
+      setUser(null);
+    }
+
+    try {
+      const metadataRes = await apiClient.get("/api/metadata/fetch");
+      const metadataData = metadataRes.data as {
+        success: boolean;
+        data?: {
+          exists: boolean;
+          data?: Record<string, unknown>;
+        };
+      };
 
       if (metadataData.success && metadataData.data?.exists && metadataData.data?.data) {
         const data = metadataData.data.data;
@@ -76,7 +68,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setMetadata(null);
       }
     } catch (error) {
-      setUser(null);
       setMetadata(null);
     } finally {
       setLoading(false);
