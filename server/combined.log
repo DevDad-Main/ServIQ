@@ -1006,3 +1006,22 @@
 {"level":"info","message":"[KNOWLEDGE_STORE] Total rows parsed: 1000","service":"serviq-saas","timestamp":"2026-01-19T20:27:22.176Z"}
 {"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-19T20:57:17.155Z"}
 {"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-19T20:57:17.160Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-20T09:08:48.672Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-20T09:08:48.677Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-20T09:08:48.677Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-20T09:08:48.678Z"}
+{"URL":"/callback?code=Sef2AERFy67T1Q1Li0icXeyAFIhzyRng15M8HhH6O3MuuE9ZY-4&state=d534b6bd7f3707169dfb3c0ac4d4847e","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-20T09:09:35.581Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-20T09:09:38.564Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-20T09:09:45.572Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-20T09:11:46.105Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-20T09:11:46.108Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-20T09:11:46.108Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-20T09:11:46.108Z"}
+{"URL":"/status","body":{},"cookies":{},"hasUserSessionCookie":false,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-20T09:11:50.769Z"}
+{"cookieValue":"undefined...","hasCookie":false,"level":"warn","message":"Auth status: session invalid or missing","service":"serviq-saas","timestamp":"2026-01-20T09:11:50.770Z"}
+{"URL":"/callback?code=LDW065iWRzxWm6EgcZud3P-3nZaddd7w84SBNZE7_md3-PCBFqw&state=452781f1ea46e00d3a9525c0f8c37497","body":{},"level":"info","message":"GET: /api/auth/callback","service":"serviq-saas","timestamp":"2026-01-20T09:11:54.840Z"}
+{"URL":"/status","body":{},"cookies":{"user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-20T09:11:56.521Z"}
+{"URL":"/status","body":{},"cookies":{"metadata":"{\"business_name\":\"ServIQ\"}","user_session":"{\"email\":\"softwaredevdad@gmail.com\",\"organization_id\":\"org_108554582086386702\"}"},"hasUserSessionCookie":true,"level":"info","message":"GET: /api/auth/status","service":"serviq-saas","timestamp":"2026-01-20T09:12:03.705Z"}
+{"level":"info","message":"[KNOWLEDGE_SERVICE] Parsed 1000 rows from CSV","service":"serviq-saas","timestamp":"2026-01-20T09:12:10.354Z"}
+{"level":"info","message":"[KNOWLEDGE_SERVICE] Summarized content, length: 668","service":"serviq-saas","timestamp":"2026-01-20T09:12:16.353Z"}
+{"level":"info","message":"[KNOWLEDGE_SERVICE] Created knowledge source: fed4bc08-762b-44d3-80c5-4a3440f18942","service":"serviq-saas","timestamp":"2026-01-20T09:12:16.434Z"}

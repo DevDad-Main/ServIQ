@@ -15,17 +15,16 @@ const prisma = new PrismaClient();
 
 export const knowledgeService = {
   async parseCSV(buffer: Buffer): Promise<ParsedCSVResult> {
-    const results: Record<string, unknown>[] = await new Promise(
-      (resolve, reject) => {
-        const stream = Readable.from(buffer);
+    let results: Record<string, unknown>[] = [];
+    await new Promise((resolve, reject) => {
+      const stream = Readable.from(buffer);
 
-        stream
-          .pipe(csv())
-          .on("data", (data) => results.push(data))
-          .on("end", () => resolve(results))
-          .on("error", (error) => reject(error));
-      },
-    );
+      stream
+        .pipe(csv())
+        .on("data", (data) => results.push(data))
+        .on("end", () => resolve(results))
+        .on("error", (error) => reject(error));
+    });
 
     logger.info(`[KNOWLEDGE_SERVICE] Parsed ${results.length} rows from CSV`);
 
@@ -60,7 +59,9 @@ export const knowledgeService = {
 
     const markdown = await response.text();
 
-    logger.info(`[KNOWLEDGE_SERVICE] Scraped ${url}, markdown length: ${markdown.length}`);
+    logger.info(
+      `[KNOWLEDGE_SERVICE] Scraped ${url}, markdown length: ${markdown.length}`,
+    );
 
     return {
       markdown,
