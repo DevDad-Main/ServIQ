@@ -1,20 +1,14 @@
-import { useAuth } from "@/lib/auth-context";
-import { useMetadata } from "@/hooks/useApi";
+import { useApp } from "@/lib/AppContext";
 import { useEffect, useState } from "react";
 
 export function DashboardLoader({ children }: { children: React.ReactNode }) {
-  const { user, loading: authLoading } = useAuth();
-  const { metadata, loading: metadataLoading, refetch: refetchMetadata } = useMetadata();
-
-  const isLoading = authLoading || metadataLoading;
+  const { metadata, loading, initialized } = useApp();
 
   useEffect(() => {
-    if (user && !metadata && !metadataLoading) {
-      refetchMetadata();
-    }
-  }, [user, metadata, metadataLoading, refetchMetadata]);
+    if (!initialized) return;
+  }, [initialized]);
 
-  if (isLoading) {
+  if (loading || !initialized) {
     return <LoadingScreen metadata={metadata} />;
   }
 

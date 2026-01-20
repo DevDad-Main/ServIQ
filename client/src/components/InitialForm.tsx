@@ -14,6 +14,7 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Input } from "./ui/input";
 import { metadataApi } from "@/lib/api";
+import { useApp } from "@/lib/AppContext";
 
 interface InitialData {
   businessName: string;
@@ -71,6 +72,7 @@ const InitialForm = () => {
   const stepData = STEPS[currentStep];
   const Icon = stepData.icon;
   const navigate = useNavigate();
+  const { refreshMetadata } = useApp();
 
   const isStepValid =
     currentStep >= 2 ||
@@ -136,6 +138,7 @@ const InitialForm = () => {
         website_url: formData.websiteURL,
         external_links: formData.externalLinks,
       });
+      await refreshMetadata();
       navigate("/dashboard", { replace: true });
     } catch (error) {
       console.error("Failed to submit:", error);

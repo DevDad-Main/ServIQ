@@ -1,39 +1,19 @@
-import { useAuth } from "../lib/auth-context";
-import { useMetadata } from "@/hooks/useApi";
-import { useToast } from "@/lib/toast";
+import { useApp } from "../lib/AppContext";
+import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const { user } = useAuth();
-  const { metadata, error, refetch } = useMetadata();
-  const { success } = useToast();
+  const { user, metadata, loading } = useApp();
 
-  const handleRefresh = async () => {
-    await refetch();
-    success("Dashboard refreshed");
-  };
-
-  if (error) {
+  if (loading) {
     return (
       <div className="flex-1 flex w-full items-center justify-center p-4">
-        <div className="text-center">
-          <p className="text-red-400 mb-2">{error.message}</p>
-          <button
-            onClick={handleRefresh}
-            className="text-sm text-indigo-400 hover:text-indigo-300"
-          >
-            Retry
-          </button>
-        </div>
+        <div className="w-8 h-8 border-2 border-white/10 border-t-indigo-500 rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!metadata) {
-    return (
-      <div className="flex-1 flex w-full items-center justify-center p-4">
-        <p className="text-zinc-400">No workspace data found</p>
-      </div>
-    );
+    return <Navigate to="/setup" replace />;
   }
 
   return (

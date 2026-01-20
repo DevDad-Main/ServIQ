@@ -177,6 +177,7 @@ export const authService = {
     return {
       httpOnly: true,
       secure: false,
+      sameSite: false as const,
       maxAge: 60 * 60 * 24 * 1,
       domain: "localhost",
     };

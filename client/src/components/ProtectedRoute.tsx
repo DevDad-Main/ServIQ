@@ -1,43 +1,38 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../lib/auth-context";
-import { useMetadata } from "../hooks/useApi";
+import { useApp } from "../lib/AppContext";
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { user, loading: authLoading } = useAuth();
+  const { user, metadata, loading, initialized } = useApp();
   const location = useLocation();
-  const { metadata, loading: metadataLoading } = useMetadata();
   const [redirectState, setRedirectState] = useState<"none" | "toSetup" | "toDashboard">("none");
 
   useEffect(() => {
-    if (authLoading || metadataLoading) return;
+    if (!initialized) return;
 
     if (!user) {
-      console.log("[PROTECTED_ROUTE] No user, redirecting to home");
       setRedirectState("none");
       return;
     }
 
     if (!metadata) {
-      console.log("[PROTECTED_ROUTE] No metadata, redirecting to /setup");
       setRedirectState("toSetup");
       return;
     }
 
     if (location.pathname === "/setup") {
-      console.log("[PROTECTED_ROUTE] Has metadata but on /setup, redirecting to /dashboard");
       setRedirectState("toDashboard");
       return;
     }
 
     setRedirectState("none");
-  }, [user, authLoading, metadataLoading, metadata, location.pathname]);
+  }, [user, metadata, initialized, location.pathname]);
 
-  if (authLoading || metadataLoading) {
+  if (loading || !initialized) {
     return (
       <div className="flex-1 flex w-full items-center justify-center p-4">
         <div className="w-8 h-8 border-2 border-white/10 border-t-indigo-500 rounded-full animate-spin" />

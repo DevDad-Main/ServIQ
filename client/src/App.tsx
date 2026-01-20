@@ -11,7 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import PlaceholderPage from "./pages/Placeholder";
 import AuthCallback from "./pages/AuthCallback";
 import SetupPage from "./pages/SetupPage";
-import { AuthProvider } from "./lib/auth-context";
+import { AppProvider } from "./lib/AppContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import KnowledgePage from "./pages/KnowledgePage";
 import { ToastProvider } from "./lib/toast";
@@ -31,7 +31,7 @@ function App() {
   return (
     <BrowserRouter>
       <ToastProvider>
-        <AuthProvider>
+        <AppProvider>
           <Routes>
             <Route
               path="/"
@@ -81,7 +81,7 @@ function App() {
               }
             />
           </Routes>
-        </AuthProvider>
+        </AppProvider>
       </ToastProvider>
     </BrowserRouter>
   );

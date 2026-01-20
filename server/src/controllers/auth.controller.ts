@@ -55,6 +55,7 @@ export const authController = {
         res.cookie("sk_state", state, {
           httpOnly: true,
           secure: false,
+          sameSite: false as const,
           path: "/",
           domain: "localhost",
         });
@@ -87,8 +88,9 @@ export const authController = {
       if (error) {
         res.clearCookie("sk_state", {
           httpOnly: true,
-          sameSite: "none",
+          sameSite: false as const,
           path: "/",
+          domain: "localhost",
         });
         return sendError(res, `${errorDescription}`, 401, {
           error,
@@ -99,6 +101,7 @@ export const authController = {
         res.clearCookie("sk_state", {
           httpOnly: true,
           secure: false,
+          sameSite: false as const,
           path: "/",
           domain: "localhost",
         });
@@ -109,6 +112,7 @@ export const authController = {
         res.clearCookie("sk_state", {
           httpOnly: true,
           secure: false,
+          sameSite: false as const,
           path: "/",
           domain: "localhost",
         });
@@ -118,6 +122,7 @@ export const authController = {
       res.clearCookie("sk_state", {
         httpOnly: true,
         secure: false,
+        sameSite: false as const,
         path: "/",
         domain: "localhost",
       });
@@ -185,12 +190,14 @@ export const authController = {
       res.clearCookie("user_session", {
         httpOnly: true,
         secure: false,
+        sameSite: false as const,
         path: "/",
         domain: "localhost",
       });
       res.clearCookie("sk_state", {
         httpOnly: true,
         secure: false,
+        sameSite: false as const,
         path: "/",
         domain: "localhost",
       });

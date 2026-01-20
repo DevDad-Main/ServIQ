@@ -8,8 +8,7 @@ import {
   MessageSquare,
   Settings,
 } from "lucide-react";
-import { useAuth } from "@/lib/auth-context";
-import { useMetadata } from "@/hooks/useApi";
+import { useApp } from "@/lib/AppContext";
 
 const SIDEBAR_ITEMS = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -26,8 +25,7 @@ const SIDEBAR_ITEMS = [
 
 const Sidebar = () => {
   const location = useLocation();
-  const { user } = useAuth();
-  const { metadata, loading } = useMetadata();
+  const { user, metadata, loading } = useApp();
 
   return (
     <div className="w-64 border-r border-white/5 bg-[#050509] flex-col h-screen fixed left-0 top-0 z-40 hidden md:flex">
