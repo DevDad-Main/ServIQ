@@ -19,7 +19,7 @@ export const knowledgeController = {
   store: catchAsync(async (req: AuthRequest, res: Response) => {
     const user = req.user;
     const csvFile = req.file;
-    const { type, url, text } = req.body;
+    const { type, url, content, title } = req.body;
 
     if (!user) {
       return sendError(res, "Unauthorized", 401);
@@ -59,12 +59,12 @@ export const knowledgeController = {
       return sendSuccess(res, { source }, "Website scraped and processed", 201);
     }
 
-    if (type === "text" && text) {
-      const summarized = await knowledgeService.summarizeContent(text);
+    if (type === "text" && content && title) {
+      const summarized = await knowledgeService.summarizeContent(content);
       const source = await knowledgeService.create({
         type: "text",
         userEmail: user.email,
-        title: "Text Input",
+        title,
         content: summarized,
       });
 

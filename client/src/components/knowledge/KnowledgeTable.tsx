@@ -20,10 +20,10 @@ interface KnowledgeTableProps {
   isLoading: boolean;
 }
 
-type SourceType = "website" | "docs" | "upload" | "text";
-type SourceStatus = "active" | "training" | "error" | "excluded";
+export type SourceType = "website" | "docs" | "upload" | "text";
+export type SourceStatus = "active" | "training" | "error" | "excluded";
 
-const getTypeIcon = (type: SourceType) => {
+export const getTypeIcon = (type: SourceType) => {
   switch (type) {
     case "website":
       return <Globe className="w-4 h-4 text-blue-400" />;
@@ -35,7 +35,7 @@ const getTypeIcon = (type: SourceType) => {
   }
 };
 
-const getStatusBadge = (status: SourceStatus) => {
+export const getStatusBadge = (status: SourceStatus) => {
   switch (status) {
     case "active":
       return (

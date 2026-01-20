@@ -7,6 +7,7 @@ import { useKnowledge } from "@/hooks/useApi";
 import { useToast } from "@/lib/toast";
 import { KnowledgeSource } from "@/types/types";
 import KnowledgeTable from "@/components/knowledge/KnowledgeTable";
+import SourceDetailsSheet from "@/components/knowledge/SourceDetailsSheet";
 
 const KnowledgePage = () => {
   const [defaultTab, setDefaultTab] = useState("website");
@@ -28,7 +29,11 @@ const KnowledgePage = () => {
       await storeKnowledge(data);
       success("Knowledge source added successfully");
 
-      if (data.type === "upload") {
+      if (
+        data.type === "upload" ||
+        data.type === "text" ||
+        data.type === "file"
+      ) {
         setIsAddOpen(false);
       }
     } catch (err) {
@@ -82,6 +87,12 @@ const KnowledgePage = () => {
         onImport={handleImportSource}
         isLoading={loading}
         existingSources={sources}
+      />
+
+      <SourceDetailsSheet
+        isOpen={isSheetOpen}
+        setIsOpen={setIsSheetOpen}
+        selectedSource={selectedSource}
       />
     </div>
   );

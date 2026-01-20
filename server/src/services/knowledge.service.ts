@@ -126,6 +126,8 @@ export const knowledgeService = {
       sourceContent = await this.summarizeContent(csvJson);
     } else if (type === "website" && content) {
       sourceContent = await this.summarizeContent(content);
+    } else if (type === "text" && content) {
+      sourceContent = await this.summarizeContent(content);
     }
 
     const source = await prisma.knowledgeSource.create({
@@ -134,7 +136,7 @@ export const knowledgeService = {
         type,
         name,
         sourceUrl: url || null,
-        content: sourceContent,
+        content: sourceContent as string,
         status: "active",
       },
     });
