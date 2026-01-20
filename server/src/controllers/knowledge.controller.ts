@@ -47,6 +47,8 @@ export const knowledgeController = {
 
     if (type === "website" && url) {
       const scraped = await knowledgeService.scrapeWebsite(url);
+
+      console.log("SCRAPED CONTENT...", scraped);
       const source = await knowledgeService.create({
         type: "website",
         userEmail: user.email,

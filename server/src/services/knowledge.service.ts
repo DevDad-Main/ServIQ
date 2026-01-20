@@ -1,8 +1,10 @@
+import "dotenv/config";
+import axios from "axios";
 import { PrismaClient } from "@prisma/client";
 import csv from "csv-parser";
 import { Readable } from "stream";
 import { openai, summarizeMarkdown } from "@/lib/openAI";
-import { logger } from "devdad-express-utils";
+import { AppError, logger } from "devdad-express-utils";
 import {
   CreateKnowledgeInput,
   KnowledgeSource,
@@ -12,6 +14,7 @@ import {
 } from "@/types/knowledge";
 
 const prisma = new PrismaClient();
+const apikey = process.env.ZENROWS_API_KEY as string;
 
 export const knowledgeService = {
   async parseCSV(buffer: Buffer): Promise<ParsedCSVResult> {
@@ -36,35 +39,50 @@ export const knowledgeService = {
   },
 
   async scrapeWebsite(url: string): Promise<ScrapeResult> {
-    const zenUrl = new URL("https://api.zenrows.com/v1/");
-    zenUrl.searchParams.set("apikey", process.env.ZENROWS_API_KEY as string);
-    zenUrl.searchParams.set("url", url);
-    zenUrl.searchParams.set("response_type", "markdown");
+    // const zenUrl = new URL("https://api.zenrows.com/v1/");
+    // zenUrl.searchParams.set("apikey", process.env.ZENROWS_API_KEY as string);
+    // zenUrl.searchParams.set("url", url);
+    // zenUrl.searchParams.set("response_type", "markdown");
 
-    const response = await fetch(zenUrl.toString(), {
-      headers: {
-        "User-Agent": "ServIQBot/1.0",
+    // const response = await fetch(zenUrl.toString(), {
+    //   headers: {
+    //     "User-Agent": "ServIQBot/1.0",
+    //   },
+    // });
+
+    // if (!response.ok) {
+    //   const errorBody = await response.text();
+    //   throw new Error(
+    //     `ZenRows request failed with status ${response.status}: ${errorBody.slice(
+    //       0,
+    //       500,
+    //     )}`,
+    //   );
+    // }
+
+    // const markdown = await response.text();
+
+    const response = await axios({
+      url: "https://api.zenrows.com/v1/",
+      method: "GET",
+      params: {
+        url: url,
+        apikey: apikey,
       },
     });
 
-    if (!response.ok) {
-      const errorBody = await response.text();
-      throw new Error(
-        `ZenRows request failed with status ${response.status}: ${errorBody.slice(
-          0,
-          500,
-        )}`,
+    if (!response || !response.data) {
+      throw new AppError(
+        `ZenRows request failed with status ${response.status}:`,
+        500,
+        ["Axios Request Failed"],
       );
     }
 
-    const markdown = await response.text();
-
-    logger.info(
-      `[KNOWLEDGE_SERVICE] Scraped ${url}, markdown length: ${markdown.length}`,
-    );
+    logger.info(`[KNOWLEDGE_SERVICE] Scraped ${url}`);
 
     return {
-      markdown,
+      markdown: response.data as string,
       url,
       success: true,
     };
