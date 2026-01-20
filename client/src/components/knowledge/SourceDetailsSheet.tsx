@@ -1,5 +1,5 @@
 import { KnowledgeSource } from "@/types/types";
-import React from "react";
+import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -20,32 +20,42 @@ interface SourceDetailsSheetProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   selectedSource: KnowledgeSource | null;
+  onDelete?: (id: string) => Promise<void>;
 }
 
 const SourceDetailsSheet = ({
   isOpen,
   setIsOpen,
   selectedSource,
+  onDelete,
 }: SourceDetailsSheetProps) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   if (!selectedSource) return null;
+
+  const handleDelete = async () => {
+    if (!onDelete || !selectedSource.id) return;
+    setIsDeleting(true);
+    try {
+      await onDelete(selectedSource.id);
+      setIsOpen(false);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetContent className="w-full sm:max-w-md border-l border-white/10 bg-[#0a0a0e] p-0 shadow-2xl">
         <div className="h-full flex flex-col">
           <SheetHeader className="p-6 border-b border-white/5">
-            {/* Display source Type and Name */}
             <SheetTitle className="text-xl text-white flex items-center gap-2">
               {getTypeIcon(selectedSource.type as SourceType)}
               {selectedSource.name}
             </SheetTitle>
-
-            {/* Display the URL */}
             <SheetDescription className="text-zinc-500">
               {selectedSource.sourceUrl || "Manual Entry."}
             </SheetDescription>
-
-            {/* Display the updated at time and status icon*/}
             <div className="pt-2 flex gap-2">
               {getStatusBadge(selectedSource.status as SourceStatus)}
               <span className="text-xs text-zinc-500 py-1 flex items-center">
@@ -56,7 +66,6 @@ const SourceDetailsSheet = ({
             </div>
           </SheetHeader>
 
-          {/* Display the content */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             <div className="space-y-4">
               <h4 className="text-sm font-medium text-zinc-300 uppercase tracking-wide">
@@ -72,9 +81,11 @@ const SourceDetailsSheet = ({
           <SheetFooter className="p-6 border-t border-white/5 bg-[#050509]">
             <Button
               variant="destructive"
+              onClick={handleDelete}
+              disabled={isDeleting}
               className="w-full bg-red-500/10 text-red-500 hover:bg-red-500/20"
             >
-              Disconnect Source
+              {isDeleting ? "Disconnecting..." : "Disconnect Source"}
             </Button>
           </SheetFooter>
         </div>

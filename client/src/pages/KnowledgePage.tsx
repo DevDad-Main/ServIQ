@@ -16,7 +16,7 @@ const KnowledgePage = () => {
     null,
   );
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const { sources, loading, storeKnowledge } = useKnowledge();
+  const { sources, loading, storeKnowledge, deleteKnowledge } = useKnowledge();
   const { success, error } = useToast();
 
   const openModal = (tab: string) => {
@@ -44,6 +44,15 @@ const KnowledgePage = () => {
   const handleSourceClick = async (source: KnowledgeSource) => {
     setSelectedSource(source);
     setIsSheetOpen(true);
+  };
+
+  const handleDeleteSource = async (id: string) => {
+    try {
+      await deleteKnowledge(id);
+      success("Source disconnected successfully");
+    } catch (err) {
+      error("Failed to disconnect source");
+    }
   };
 
   return (
@@ -93,6 +102,7 @@ const KnowledgePage = () => {
         isOpen={isSheetOpen}
         setIsOpen={setIsSheetOpen}
         selectedSource={selectedSource}
+        onDelete={handleDeleteSource}
       />
     </div>
   );
