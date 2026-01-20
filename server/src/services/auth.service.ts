@@ -171,15 +171,16 @@ export const authService = {
         httpOnly: true,
         secure: true,
         sameSite: "none" as const,
-        maxAge: 60 * 60 * 24 * 1,
+        path: "/",
+        maxAge: 60 * 60 * 24,
       };
     }
     return {
       httpOnly: true,
       secure: false,
-      sameSite: false as const,
-      maxAge: 60 * 60 * 24 * 1,
-      domain: "localhost",
+      sameSite: "lax" as const,
+      path: "/",
+      maxAge: 60 * 60 * 24,
     };
   },
 };

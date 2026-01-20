@@ -2,39 +2,17 @@ import { Response } from "express";
 import { AuthRequest } from "@/types/express";
 import { logger, sendError, sendSuccess } from "devdad-express-utils";
 import { authService } from "@/services/auth.service";
+import { signSession, verifySession } from "@/lib/jwt";
 
 export const authController = {
-  status: async (req: AuthRequest, res: Response): Promise<void> => {
-    logger.info("GET: /api/auth/status", {
-      URL: req.url,
-      body: req.body,
-      cookies: req.cookies,
-      hasUserSessionCookie: !!req.cookies.user_session,
-    });
-
-    const result = await authService.getSessionFromCookie(
-      req.cookies.user_session,
-    );
-
-    if (!result.success || !result.session) {
-      logger.warn("Auth status: session invalid or missing", {
-        hasCookie: !!req.cookies.user_session,
-        cookieValue: req.cookies.user_session?.substring(0, 50) + "...",
-        error: result.error,
-      });
-      return sendError(res, "Unauthenticated User", 401, {
-        authenticated: false,
-      });
-    }
-
-    // res.json({ authenticated: true, user: result.session });
+  status: (req: AuthRequest, res: Response): void => {
     sendSuccess(
       res,
       {
         authenticated: true,
-        user: result.session,
+        user: req.user,
       },
-      " Fetched User From Cookies Successfully",
+      "Fetched User From Session Successfully",
       200,
     );
   },
@@ -75,7 +53,7 @@ export const authController = {
     try {
       logger.info("GET: /api/auth/callback", {
         URL: req.url,
-        body: req.body,
+        query: req.query,
       });
 
       const code = req.query.code as string | undefined;
@@ -85,94 +63,98 @@ export const authController = {
         | undefined;
       const state = req.query.state as string | undefined;
 
+      const isProduction = process.env.NODE_ENV === "production";
+      const frontendURL = process.env.FRONTEND_URL || "http://localhost:5173";
+
+      // ---- Error from Scalekit ----
       if (error) {
         res.clearCookie("sk_state", {
           httpOnly: true,
-          sameSite: false as const,
+          secure: isProduction,
+          sameSite: isProduction ? "none" : "lax",
           path: "/",
-          domain: "localhost",
         });
-        return sendError(res, `${errorDescription}`, 401, {
+
+        return sendError(res, errorDescription || "Authentication error", 401, {
           error,
         });
       }
 
+      // ---- Missing code ----
       if (!code) {
         res.clearCookie("sk_state", {
           httpOnly: true,
-          secure: false,
-          sameSite: false as const,
+          secure: isProduction,
+          sameSite: isProduction ? "none" : "lax",
           path: "/",
-          domain: "localhost",
         });
+
         return sendError(res, "No authorization code found", 400);
       }
 
+      // ---- State validation ----
       if (!state || state !== req.cookies.sk_state) {
         res.clearCookie("sk_state", {
           httpOnly: true,
-          secure: false,
-          sameSite: false as const,
+          secure: isProduction,
+          sameSite: isProduction ? "none" : "lax",
           path: "/",
-          domain: "localhost",
         });
+
         return sendError(res, "Invalid state parameter", 400);
       }
 
+      // ---- Clear state cookie ----
       res.clearCookie("sk_state", {
         httpOnly: true,
-        secure: false,
-        sameSite: false as const,
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
         path: "/",
-        domain: "localhost",
       });
 
+      // ---- Authenticate with Scalekit ----
       const authResult = await authService.authenticateWithCode(code);
 
-      if (!authResult.success || !authResult.session || !authResult) {
-        return sendError(
-          res,
-          authResult.error || "Authentication Failed",
-          401,
-          {
-            error: authResult.error,
-          },
-        );
+      if (!authResult.success || !authResult.session) {
+        return sendError(res, authResult.error || "Authentication Failed", 401);
       }
 
-      const cookieOptions = authService.getSessionCookieOptions();
-      const frontendURL = process.env.FRONTEND_URL || "http://localhost:5173";
+      // ---- Create signed JWT ----
+      const token = signSession(authResult.session);
 
+      const cookieOptions = {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "none" : ("lax" as const),
+        path: "/",
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+      };
+
+      // ---- Use your sendSuccess wrapper ----
       sendSuccess(
         res,
-        { user: authResult.session },
+        { authenticated: true },
         "Authentication Successful",
         200,
         [
           (res) => {
-            res.cookie(
-              "user_session",
-              JSON.stringify(authResult.session),
-              cookieOptions,
-            );
+            res.cookie("user_session", token, cookieOptions);
           },
-          (res) => res.redirect(`${frontendURL}`),
+          (res) => {
+            res.redirect(frontendURL);
+          },
         ],
       );
     } catch (error: any) {
-      console.error("Auth callback error:", error);
-      return sendError(
-        res,
-        (error?.message as string) || "Authentication Failed",
-        500,
-        error,
-      );
+      logger.error("Auth callback error", error);
+
+      return sendError(res, error?.message || "Authentication Failed", 500);
     }
   },
 
   logout: async (_req: AuthRequest, res: Response): Promise<void> => {
     const isProduction = process.env.NODE_ENV === "production";
-    
+
     if (isProduction) {
       res.clearCookie("user_session", {
         httpOnly: true,
@@ -202,7 +184,7 @@ export const authController = {
         domain: "localhost",
       });
     }
-    
+
     sendSuccess(res, null, "Logged out successfully", 200);
   },
 };
