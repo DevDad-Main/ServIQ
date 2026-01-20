@@ -5,10 +5,16 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useKnowledge } from "@/hooks/useApi";
 import { useToast } from "@/lib/toast";
+import { KnowledgeSource } from "@/types/types";
+import KnowledgeTable from "@/components/knowledge/KnowledgeTable";
 
 const KnowledgePage = () => {
   const [defaultTab, setDefaultTab] = useState("website");
   const [isAddOpen, setIsAddOpen] = useState(false);
+  const [selectedSource, setSelectedSource] = useState<KnowledgeSource | null>(
+    null,
+  );
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { sources, loading, storeKnowledge } = useKnowledge();
   const { success, error } = useToast();
 
@@ -28,6 +34,11 @@ const KnowledgePage = () => {
     } catch (err) {
       error("Failed to add knowledge source");
     }
+  };
+
+  const handleSourceClick = async (source: KnowledgeSource) => {
+    setSelectedSource(source);
+    setIsSheetOpen(true);
   };
 
   return (
@@ -55,6 +66,12 @@ const KnowledgePage = () => {
 
       {/* Quick Actions */}
       <QuickActions onOpenModal={openModal} />
+
+      <KnowledgeTable
+        sources={sources}
+        onSourceClick={handleSourceClick}
+        isLoading={loading}
+      />
 
       {/* Knowledge Model */}
       <AddKnowledgeModal
