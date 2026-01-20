@@ -12,6 +12,7 @@ import {
   ParsedCSVResult,
   ScrapeResult,
 } from "@/types/knowledge";
+import { AxiosResponse } from "axios";
 
 const prisma = new PrismaClient();
 const apikey = process.env.ZENROWS_API_KEY as string;
@@ -62,14 +63,27 @@ export const knowledgeService = {
 
     // const markdown = await response.text();
 
-    const response = await axios({
-      url: "https://api.zenrows.com/v1/",
-      method: "GET",
-      params: {
-        url: url,
-        apikey: apikey,
-      },
-    });
+    let response: AxiosResponse;
+    try {
+      response = await axios({
+        url: "https://api.zenrows.com/v1/",
+        method: "GET",
+        params: {
+          url: url,
+          apikey: apikey,
+        },
+      });
+
+      if (response || response.data)
+        logger.info(`[KNOWLEDGE_SERVICE] Successful Response/Scrape ${url}`, {
+          status: response.status,
+          data: response.data,
+        });
+    } catch (error) {
+      logger.error(`[KNOWLEDGE_SERVICE] Failed to scrape ${url}`, { error });
+      response = null;
+      throw error;
+    }
 
     if (!response || !response.data) {
       throw new AppError(
@@ -78,8 +92,6 @@ export const knowledgeService = {
         ["Axios Request Failed"],
       );
     }
-
-    logger.info(`[KNOWLEDGE_SERVICE] Scraped ${url}`);
 
     return {
       markdown: response.data as string,

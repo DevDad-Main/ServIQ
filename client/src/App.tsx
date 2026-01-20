@@ -27,6 +27,8 @@ const LandingPage = () => (
   </div>
 );
 
+import NotFound from "./pages/NotFound";
+
 function App() {
   return (
     <BrowserRouter>
@@ -43,14 +45,7 @@ function App() {
               }
             />
             <Route path="/auth/callback" element={<AuthCallback />} />
-            <Route
-              path="/setup"
-              element={
-                <ProtectedRoute>
-                  <SetupPage />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/setup" element={<ProtectedRoute><SetupPage /></ProtectedRoute>} />
             <Route
               path="/dashboard/*"
               element={
@@ -80,6 +75,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </AppProvider>
       </ToastProvider>
