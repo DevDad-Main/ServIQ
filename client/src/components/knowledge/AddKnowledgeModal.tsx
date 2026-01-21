@@ -14,16 +14,11 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import type { KnowledgeSource } from "@/types/types";
-
-const validateURL = (url: string) => {
-  try {
-    const parsed = new URL(url);
-    return ["http:", "https:"].includes(parsed.protocol);
-  } catch (error) {
-    console.log("Validate URL Error: ", error);
-    return false;
-  }
-};
+import {
+  validateWebsiteSource,
+  validateTextSource,
+  validateUploadSource,
+} from "@/lib/validation";
 
 interface AddKnowledgeModalProps {
   isOpen: boolean;
@@ -55,12 +50,9 @@ const AddKnowledgeModal = ({
     const data: any = { type: defaultTab };
 
     if (defaultTab === "website") {
-      if (!websiteURL) {
-        setError("Please enter a website URL.");
-        return;
-      }
-      if (!validateURL(websiteURL)) {
-        setError("Please enter a valid URL (e.g: https://www.google.co.uk");
+      const validation = validateWebsiteSource({ url: websiteURL });
+      if (!validation.valid) {
+        setError(validation.error || "Please enter a valid website URL.");
         return;
       }
 
@@ -74,25 +66,36 @@ const AddKnowledgeModal = ({
 
       if (exists) {
         setError("This website is already in your knowledge base.");
+        return;
       }
 
       data.url = websiteURL;
     } else if (defaultTab === "text") {
-      if (!docsTitle.trim()) {
-        setError("Please enter a title.");
+      const validation = validateTextSource({
+        title: docsTitle,
+        content: docsContent,
+      });
+
+      if (!validation.valid) {
+        setError(validation.error || "Please fill in all required fields.");
         return;
       }
-      if (!docsContent.trim()) {
-        setError("Please provide content.");
-        return;
-      }
+
       data.title = docsTitle;
       data.content = docsContent;
     } else if (defaultTab === "upload") {
+      const validation = validateUploadSource({ file: uploadedFile });
+
+      if (!validation.valid) {
+        setError(validation.error || "Please select a valid file.");
+        return;
+      }
+
       if (!uploadedFile) {
         setError("Please select a file to upload");
         return;
       }
+
       data.file = uploadedFile;
     }
 

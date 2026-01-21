@@ -28,6 +28,10 @@ const LandingPage = () => (
 );
 
 import NotFound from "./pages/NotFound";
+import SectionPage from "./pages/SectionPage";
+import ChatbotPage from "./pages/ChatbotPage";
+import ConversationsPage from "./pages/ConversationsPage";
+import SettingsPage from "./pages/SettingsPage";
 
 function App() {
   return (
@@ -45,7 +49,14 @@ function App() {
               }
             />
             <Route path="/auth/callback" element={<AuthCallback />} />
-            <Route path="/setup" element={<ProtectedRoute><SetupPage /></ProtectedRoute>} />
+            <Route
+              path="/setup"
+              element={
+                <ProtectedRoute>
+                  <SetupPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/dashboard/*"
               element={
@@ -54,22 +65,13 @@ function App() {
                     <Routes>
                       <Route index element={<Dashboard />} />
                       <Route path="knowledge" element={<KnowledgePage />} />
-                      <Route
-                        path="sections"
-                        element={<PlaceholderPage title="Sections" />}
-                      />
-                      <Route
-                        path="chatbot"
-                        element={<PlaceholderPage title="Chatbot" />}
-                      />
+                      <Route path="sections" element={<SectionPage />} />
+                      <Route path="chatbot" element={<ChatbotPage />} />
                       <Route
                         path="conversations"
-                        element={<PlaceholderPage title="Conversations" />}
+                        element={<ConversationsPage />}
                       />
-                      <Route
-                        path="settings"
-                        element={<PlaceholderPage title="Settings" />}
-                      />
+                      <Route path="settings" element={<SettingsPage />} />
                     </Routes>
                   </DashboardLayout>
                 </ProtectedRoute>

@@ -15,12 +15,7 @@ import { Textarea } from "./ui/textarea";
 import { Input } from "./ui/input";
 import { metadataApi } from "@/lib/api";
 import { useApp } from "@/lib/AppContext";
-
-interface InitialData {
-  businessName: string;
-  websiteURL: string;
-  externalLinks: string;
-}
+import { validateBusinessInfo, BusinessInfoData } from "@/lib/validation";
 
 const STEPS = [
   {
@@ -31,7 +26,7 @@ const STEPS = [
     icon: Building2,
     placeHolder: "e.g Vertex Corp",
     type: "text",
-    field: "businessName" as keyof InitialData,
+    field: "businessName" as keyof BusinessInfoData,
   },
   {
     id: "website",
@@ -42,7 +37,7 @@ const STEPS = [
     icon: Globe,
     placeHolder: "https://exampledomain.com",
     type: "url",
-    field: "websiteURL" as keyof InitialData,
+    field: "websiteURL" as keyof BusinessInfoData,
   },
   {
     id: "links",
@@ -53,7 +48,7 @@ const STEPS = [
     placeHolder: "https://notion.so/docs...",
     type: "textarea",
     badge: "Optional",
-    field: "externalLinks" as keyof InitialData,
+    field: "externalLinks" as keyof BusinessInfoData,
   },
 ];
 
@@ -61,11 +56,12 @@ const InitialForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState<InitialData>({
+  const [formData, setFormData] = useState<BusinessInfoData>({
     businessName: "",
     websiteURL: "",
     externalLinks: "",
   });
+  const [fieldError, setFieldError] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const progress = ((currentStep + 1) / STEPS.length) * 100;
@@ -89,10 +85,13 @@ const InitialForm = () => {
   const handleNext = async () => {
     if (isSubmitting) return;
 
-    const currentField = STEPS[currentStep].field;
-    const value = formData[currentField];
+    const validation = validateBusinessInfo(formData);
+    if (!validation.valid) {
+      setFieldError(validation.error || "Invalid input");
+      return;
+    }
 
-    if (currentStep < 2 && (!value || value.trim() === "")) return;
+    setFieldError(null);
 
     if (currentStep < STEPS.length - 1) {
       setIsAnimating(true);
@@ -220,10 +219,16 @@ const InitialForm = () => {
                       ...formData,
                       [stepData.field]: e.target.value,
                     });
+                    setFieldError(null);
                   }}
                   onKeyDown={handleKeyDown}
                   placeholder={stepData.placeHolder}
-                  className="w-full bg-transparent border-0 border-b border-white/10 text-xl md:text-2xl py-4 pr-12 text-white placeholder:text-zinc-700 focus-visible:ring-0 focus-visible:border-indigo-500 rounded-none h-auto resize-none min-h-[120px] shadow-none transition-colors"
+                  className={cn(
+                    "w-full bg-transparent border-0 border-b text-xl md:text-2xl py-4 pr-12 text-white placeholder:text-zinc-700 focus-visible:ring-0 rounded-none h-auto resize-none min-h-[120px] shadow-none transition-colors",
+                    fieldError
+                      ? "border-red-500 focus-visible:border-red-500"
+                      : "border-white/10 focus-visible:border-indigo-500"
+                  )}
                   autoFocus
                 />
               ) : (
@@ -236,10 +241,16 @@ const InitialForm = () => {
                       ...formData,
                       [stepData.field]: e.target.value,
                     });
+                    setFieldError(null);
                   }}
                   onKeyDown={handleKeyDown}
                   placeholder={stepData.placeHolder}
-                  className="w-full bg-transparent border-0 border-b border-white/10 text-xl md:text-2xl py-4 pr-12 text-white placeholder:text-zinc-700 focus-visible:ring-0 focus-visible:border-indigo-600 rounded-none h-auto shadow-none transition-colors"
+                  className={cn(
+                    "w-full bg-transparent border-0 border-b text-xl md:text-2xl py-4 pr-12 text-white placeholder:text-zinc-700 focus-visible:ring-0 rounded-none h-auto shadow-none transition-colors",
+                    fieldError
+                      ? "border-red-500 focus-visible:border-red-500"
+                      : "border-white/10 focus-visible:border-indigo-600"
+                  )}
                   autoFocus
                 />
               )}
@@ -248,6 +259,12 @@ const InitialForm = () => {
                 <Icon className="w-6 h-6" />
               </div>
             </div>
+
+            {fieldError && (
+              <p className="text-red-500 text-sm mt-2 animate-in fade-in slide-in-from-top-1">
+                {fieldError}
+              </p>
+            )}
 
             <div className="flex items-center justify-between pt-8">
               <div className="hidden sm:flex items-center gap-2">
