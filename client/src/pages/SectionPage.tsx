@@ -4,9 +4,61 @@ import { Sheet } from "@/components/ui/sheet";
 import { Plus } from "lucide-react";
 import React, { useState } from "react";
 
+type SectionStatus = "active" | "draft" | "disabled";
+type Tone = "strict" | "neutral" | "friendly" | "empathetic";
+
+interface Section {
+  id: string;
+  name: string;
+  description: string;
+  sourceCount: number;
+  source_ids?: string[];
+  tone: Tone;
+  scopeLabel: string;
+  allowed_topics?: string;
+  blocked_topics?: string;
+  status: SectionStatus;
+}
+
+interface KnowledgeSource {
+  id: string;
+  name: string;
+  type: string;
+  status: string;
+}
+
+interface FormData {
+  name: string;
+  description: string;
+  tone: Tone;
+  allowedTopics: string;
+  blockedTopics: string;
+  fallbackBehaviour: string;
+}
+
+const INITIAL_FORM_DATA: FormData = {
+  name: "",
+  description: "",
+  tone: "neutral",
+  allowedTopics: "",
+  blockedTopics: "",
+  fallbackBehaviour: "escalate",
+};
+
 const SectionPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const handleCreateSection = () => {};
+  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
+  const [knowledgeSources, setKnowledgeSources] = useState<KnowledgeSource[]>(
+    [],
+  );
+  const [selectedSources, setSelectedSource] = useState<string[]>([]);
+  const [isLoadingSources, setIsLoadingSources] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [sections, setSections] = useState<Section[]>([]);
+  const [isLoadingSections, setIsLoadingSections] = useState(true);
+  const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
+
+  const handleCreateSection = async () => {};
 
   return (
     <div className="p-8 space-y-6">
