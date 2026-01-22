@@ -1,11 +1,17 @@
+import SectionFormFields from "@/components/sections/SectionFormFields";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sheet } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { SectionStatus, Tone, FormData } from "@/types/types";
+import { useKnowledge } from "@/hooks/useApi";
 import { Plus } from "lucide-react";
 import React, { useState } from "react";
-
-type SectionStatus = "active" | "draft" | "disabled";
-type Tone = "strict" | "neutral" | "friendly" | "empathetic";
 
 interface Section {
   id: string;
@@ -27,15 +33,6 @@ interface KnowledgeSource {
   status: string;
 }
 
-interface FormData {
-  name: string;
-  description: string;
-  tone: Tone;
-  allowedTopics: string;
-  blockedTopics: string;
-  fallbackBehaviour: string;
-}
-
 const INITIAL_FORM_DATA: FormData = {
   name: "",
   description: "",
@@ -46,19 +43,31 @@ const INITIAL_FORM_DATA: FormData = {
 };
 
 const SectionPage = () => {
+  const { sources: knowledgeSources, loading: isLoadingSources, fetchSources } = useKnowledge();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
-  const [knowledgeSources, setKnowledgeSources] = useState<KnowledgeSource[]>(
-    [],
-  );
-  const [selectedSources, setSelectedSource] = useState<string[]>([]);
-  const [isLoadingSources, setIsLoadingSources] = useState(true);
+  const [selectedSources, setSelectedSources] = useState<string[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [sections, setSections] = useState<Section[]>([]);
   const [isLoadingSections, setIsLoadingSections] = useState(true);
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
 
-  const handleCreateSection = async () => {};
+  const handleCreateSection = async () => {
+    setSelectedSection({
+      id: "new",
+      name: "",
+      description: "",
+      sourceCount: 0,
+      tone: "neutral",
+      scopeLabel: "",
+      status: "draft",
+    });
+    setSelectedSources([]);
+    setFormData(INITIAL_FORM_DATA);
+    setIsSheetOpen(true);
+  };
+
+  const isPreviewMode = selectedSection?.id !== "new";
 
   return (
     <div className="p-8 space-y-6">
@@ -84,7 +93,41 @@ const SectionPage = () => {
         <CardContent className="p-0">Temporarily Empty</CardContent>
       </Card>
 
-      <Sheet open={isSheetOpen}></Sheet>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetContent className="w-full sm:max-w-lg border-l border-white/10 bg-[#0a0a0e] p-0 shadow-2xl flex flex-col h-full">
+          {selectedSection && (
+            <>
+              <SheetHeader
+                className="
+                p-6 border-b border-white/5"
+              >
+                <SheetTitle className="text-xl text-white">
+                  {selectedSection.id === "new"
+                    ? "Create Section"
+                    : "View Section"}
+                </SheetTitle>
+                <SheetDescription className="text-zinc-500">
+                  {selectedSection.id === "new"
+                    ? "Configure ow the AI behaves for this specific topic"
+                    : "Review section configuration and data sources"}
+                </SheetDescription>
+              </SheetHeader>
+
+              <div className="flex-1 overflow-y-auto p-6 space-y-8">
+                <SectionFormFields
+                  formData={formData}
+                  setFormData={setFormData}
+                  selectedSources={selectedSources}
+                  setSelectedSources={setSelectedSources}
+                  knowledgeSources={knowledgeSources}
+                  isLoadingSources={isLoadingSources}
+                  isDisabled={isPreviewMode}
+                />
+              </div>
+            </>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

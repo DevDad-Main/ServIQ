@@ -1130,3 +1130,7 @@
 {"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-21T18:56:28.818Z"}
 {"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-21T18:56:28.818Z"}
 {"URL":"/callback?code=uMFa456fmzzLbxLbGl-pGWG58CbWD7Urxm4W5hbx1WHQ3eS5bkA&state=4317055f94784a216a52098d3550edd2","level":"info","message":"GET: /api/auth/callback","query":{"code":"uMFa456fmzzLbxLbGl-pGWG58CbWD7Urxm4W5hbx1WHQ3eS5bkA","state":"4317055f94784a216a52098d3550edd2"},"service":"serviq-saas","timestamp":"2026-01-21T18:56:39.390Z"}
+{"level":"info","message":"Server is running on: http://localhost:3000","service":"serviq-saas","timestamp":"2026-01-22T12:19:20.326Z"}
+{"level":"info","message":"PostgreSQL is running on: postgresql://neondb_owner:npg_gmheJ3HZ0WvR@ep-tiny-block-ag0tv23k-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require","service":"serviq-saas","timestamp":"2026-01-22T12:19:20.334Z"}
+{"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-22T12:19:20.334Z"}
+{"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-22T12:19:20.335Z"}

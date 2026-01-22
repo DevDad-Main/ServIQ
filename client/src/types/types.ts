@@ -23,3 +23,15 @@ export interface Metadata {
   website_url: string;
   external_links?: string;
 }
+
+export type SectionStatus = "active" | "draft" | "disabled";
+export type Tone = "strict" | "neutral" | "friendly" | "empathetic";
+
+export interface FormData {
+  name: string;
+  description: string;
+  tone: Tone;
+  allowedTopics: string;
+  blockedTopics: string;
+  fallbackBehaviour: string;
+}
