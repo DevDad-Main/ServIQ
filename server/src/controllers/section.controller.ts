@@ -58,12 +58,62 @@ export const sectionController = {
       sourceIds,
     };
 
-    const source = await sectionService.create(input);
+    const section = await sectionService.create(input);
 
-    if (!source) {
-      return sendError(res, "Failed to create section", 500);
+    if (!section.success) {
+      return sendError(res, section.error ?? "Failed to fetch section", 404);
     }
 
-    return sendSuccess(res, source, "Section Created Successfully", 201);
+    if (!section.data) {
+      return sendError(res, "No Sections Data Found", 404);
+    }
+
+    return sendSuccess(res, section, "Section Created Successfully", 201);
+  }),
+
+  fetch: catchAsync(async (req: AuthRequest, res: Response) => {
+    const user = req.user;
+
+    if (!user) {
+      return sendError(res, "Unauthorized", 401);
+    }
+
+    const sections = await sectionService.fetch({
+      userEmail: user.email,
+    });
+
+    if (!sections.success) {
+      return sendError(res, sections.error ?? "Failed to fetch sections", 404);
+    }
+
+    if (!sections.data) {
+      return sendError(res, "No Sections Data Found", 404);
+    }
+
+    return sendSuccess(res, sections, "Sections Fetched Successfully", 200);
+  }),
+
+  delete: catchAsync(async (req: AuthRequest, res: Response) => {
+    const user = req.user;
+    const { id } = req.params as { id: string };
+
+    if (!user) {
+      return sendError(res, "Unauthorized", 401);
+    }
+
+    if (!id) {
+      return sendError(res, "Invalid ID", 400);
+    }
+
+    const section = await sectionService.delete({
+      userEmail: user.email,
+      id,
+    });
+
+    if (!section.success) {
+      return sendError(res, section.error ?? "Failed to delete section", 404);
+    }
+
+    return sendSuccess(res, {}, "Section Deleted Successfully", 200);
   }),
 };

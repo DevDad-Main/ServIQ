@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
+import { Extensions } from "@prisma/client/runtime/react-native.js";
 
-export interface SectionInput {
+interface SectionInput {
   userEmail: string;
   name: string;
   description: string;
@@ -11,19 +12,41 @@ export interface SectionInput {
   sourceIds: string[];
 }
 
-export interface SectionResult {
+interface SectionFetchInput {
+  userEmail: string;
+}
+
+interface SectionDeleteInput {
+  userEmail: string;
+  id: string;
+}
+
+interface defaultResponse {
   success: boolean;
   error?: string;
-  data?: {
-    userEmail: string;
-    name: string;
-    description: string;
-    tone: string;
-    allowedTopics: string[];
-    blockedTopics: string[];
-    status?: string;
-    sourceIds: string[];
-  };
+}
+
+interface SectionData {
+  userEmail: string;
+  name: string;
+  description: string;
+  tone: string;
+  allowedTopics: string[];
+  blockedTopics: string[];
+  status?: string;
+  sourceIds: string[];
+}
+
+interface SectionResult extends defaultResponse {
+  data?: SectionData;
+}
+
+interface SectionFetchResult extends defaultResponse {
+  data?: SectionData[];
+}
+
+interface SectionDeleteResult extends defaultResponse {
+  data?: {};
 }
 
 export const sectionService = {
@@ -39,15 +62,7 @@ export const sectionService = {
     ) {
       return {
         success: false,
-        error: `Missing Required Fields. ${
-          (input.name,
-          !input.userEmail,
-          input.description,
-          input.tone,
-          input.allowedTopics,
-          input.blockedTopics,
-          input.sourceIds)
-        }`,
+        error: `Missing Required Fields.`,
       };
     }
 
@@ -81,6 +96,79 @@ export const sectionService = {
     } catch (error) {
       console.error("Failed to create section:", error);
       return { success: false, error: "Failed to create section" };
+    }
+  },
+
+  async fetch(input: SectionFetchInput): Promise<SectionFetchResult> {
+    const { userEmail } = input;
+
+    if (!userEmail) {
+      return {
+        success: false,
+        error: "Missing userEmail",
+      };
+    }
+
+    const sections = await prisma.section.findMany({
+      where: {
+        userEmail,
+      },
+    });
+
+    if (sections.length === 0) {
+      return {
+        success: false,
+        error: "No sections found",
+      };
+    }
+
+    return {
+      success: true,
+      data: sections,
+    };
+  },
+
+  async delete(input: SectionDeleteInput): Promise<SectionDeleteResult> {
+    const { userEmail, id } = input;
+
+    if (!userEmail) {
+      return {
+        success: false,
+        error: "Missing userEmail",
+      };
+    }
+
+    if (!id) {
+      return {
+        success: false,
+        error: "Missing id",
+      };
+    }
+
+    try {
+      const section = await prisma.section.delete({
+        where: {
+          id,
+          userEmail,
+        },
+      });
+
+      if (!section) {
+        return {
+          success: false,
+          error: "Failed to delete section",
+        };
+      }
+
+      return {
+        success: true,
+        data: {
+          message: "Section Deleted Successfully",
+        },
+      };
+    } catch (error) {
+      console.error("Failed to delete section:", error);
+      return { success: false, error: "Failed to delete section" };
     }
   },
 };
