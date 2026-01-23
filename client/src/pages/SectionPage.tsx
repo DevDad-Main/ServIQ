@@ -73,6 +73,8 @@ const SectionPage = () => {
 
   const handleSaveSection = async () => {};
 
+  const handleDeleteSection = async () => {};
+
   const isPreviewMode = selectedSection?.id !== "new";
 
   return (
@@ -151,6 +153,15 @@ const SectionPage = () => {
                   <p className="text-xs text-red-500/70 mb-3">
                     Deleting this section will remove all associated rules.
                   </p>
+                  <Button
+                    className="w-full b-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20 shadow-none"
+                    variant="destructive"
+                    size="sm"
+                    onClick={handleDeleteSection}
+                    disabled={isSaving}
+                  >
+                    {isSaving ? "Deleting..." : "Delete Section"}
+                  </Button>
                 </div>
               )}
             </>
