@@ -221,6 +221,27 @@ const SectionFormFields = ({
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label className="text-zinc-300 text-xs">Allowed Topics.</Label>
+              <Input
+                className=""
+                placeholder="e.g: pricing, refunds"
+                value={formData.allowedTopics}
+                onChange={(e) =>
+                  setFormData({ ...formData, allowedTopics: e.target.value })
+                }
+                disabled={isDisabled}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-zinc-300 text-xs">Blocked Topics.</Label>
+              <Input
+                className=""
+                placeholder="e.g: competitors, irrelevant content"
+                value={formData.blockedTopics}
+                onChange={(e) =>
+                  setFormData({ ...formData, blockedTopics: e.target.value })
+                }
+                disabled={isDisabled}
+              />
             </div>
           </div>
         </div>

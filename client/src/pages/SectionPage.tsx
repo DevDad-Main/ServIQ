@@ -43,7 +43,11 @@ const INITIAL_FORM_DATA: FormData = {
 };
 
 const SectionPage = () => {
-  const { sources: knowledgeSources, loading: isLoadingSources, fetchSources } = useKnowledge();
+  const {
+    sources: knowledgeSources,
+    loading: isLoadingSources,
+    fetchSources,
+  } = useKnowledge();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
@@ -66,6 +70,8 @@ const SectionPage = () => {
     setFormData(INITIAL_FORM_DATA);
     setIsSheetOpen(true);
   };
+
+  const handleSaveSection = async () => {};
 
   const isPreviewMode = selectedSection?.id !== "new";
 
@@ -108,12 +114,12 @@ const SectionPage = () => {
                 </SheetTitle>
                 <SheetDescription className="text-zinc-500">
                   {selectedSection.id === "new"
-                    ? "Configure ow the AI behaves for this specific topic"
+                    ? "Configure how the AI behaves for this specific topic"
                     : "Review section configuration and data sources"}
                 </SheetDescription>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-6 space-y-8">
+              <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8">
                 <SectionFormFields
                   formData={formData}
                   setFormData={setFormData}
@@ -124,6 +130,29 @@ const SectionPage = () => {
                   isDisabled={isPreviewMode}
                 />
               </div>
+
+              {selectedSection.id === "new" && (
+                <div className="p-6 border-t border-white/5">
+                  <Button
+                    className="w-full bg-white text-black hover:bg-zinc"
+                    onClick={handleSaveSection}
+                    disabled={isSaving}
+                  >
+                    {isSaving ? "Creating..." : "Create Section"}
+                  </Button>
+                </div>
+              )}
+
+              {selectedSection.id !== "new" && (
+                <div className="p-6 bg-red-500/5 border-t border-red-500/10 ">
+                  <h5 className="text-sm font-medium text-red-400 mb-1">
+                    Danger Zone
+                  </h5>
+                  <p className="text-xs text-red-500/70 mb-3">
+                    Deleting this section will remove all associated rules.
+                  </p>
+                </div>
+              )}
             </>
           )}
         </SheetContent>
