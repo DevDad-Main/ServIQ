@@ -1139,3 +1139,8 @@
 {"level":"info","message":"=== REGISTERED ROUTES ===","service":"serviq-saas","timestamp":"2026-01-22T19:27:01.980Z"}
 {"level":"info","message":"=========================","service":"serviq-saas","timestamp":"2026-01-22T19:27:01.980Z"}
 {"URL":"/callback?code=GCm2GxRBSMhf0FhpvomVvWhSBbWCW8hj3MXXS8Wm8qIB5xewI2w&state=bd349d1d1cda125fa37d80189b315827","level":"info","message":"GET: /api/auth/callback","query":{"code":"GCm2GxRBSMhf0FhpvomVvWhSBbWCW8hj3MXXS8Wm8qIB5xewI2w","state":"bd349d1d1cda125fa37d80189b315827"},"service":"serviq-saas","timestamp":"2026-01-22T19:27:21.718Z"}
+{"URL":"/callback","level":"info","message":"GET: /api/auth/callback","query":{},"service":"serviq-saas","timestamp":"2026-01-23T17:48:59.523Z"}
+{"URL":"/callback","level":"info","message":"GET: /api/auth/callback","query":{},"service":"serviq-saas","timestamp":"2026-01-23T17:49:06.353Z"}
+{"URL":"/callback","level":"info","message":"GET: /api/auth/callback","query":{},"service":"serviq-saas","timestamp":"2026-01-23T17:49:37.851Z"}
+{"URL":"/callback","level":"info","message":"GET: /api/auth/callback","query":{},"service":"serviq-saas","timestamp":"2026-01-23T17:49:40.351Z"}
+{"URL":"/callback","level":"info","message":"GET: /api/auth/callback","query":{},"service":"serviq-saas","timestamp":"2026-01-23T17:49:58.761Z"}

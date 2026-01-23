@@ -1,6 +1,6 @@
 import "dotenv/config";
 import axios from "axios";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import csv from "csv-parser";
 import { Readable } from "stream";
 import { openai, summarizeMarkdown } from "@/lib/openAI";
@@ -14,7 +14,6 @@ import {
 } from "@/types/knowledge";
 import { AxiosResponse } from "axios";
 
-const prisma = new PrismaClient();
 const apikey = process.env.ZENROWS_API_KEY as string;
 
 export const knowledgeService = {
