@@ -55,4 +55,16 @@ export const knowledgeApi = {
   delete: (id: string) => apiClient.delete(`/api/knowledge/${id}`),
 };
 
+export const sectionsApi = {
+  fetch: () =>
+    apiClient.get<{ success: boolean; data?: { sections: import("@/types/types").Section[] } }>(
+      "/api/section/fetch",
+    ),
+  create: (data: import("@/types/types").CreateSectionData) =>
+    apiClient.post("/api/sections/create", data),
+  update: (id: string, data: import("@/types/types").UpdateSectionData) =>
+    apiClient.put(`/api/sections/${id}`, data),
+  delete: (id: string) => apiClient.delete(`/api/sections/${id}`),
+};
+
 export default apiClient;

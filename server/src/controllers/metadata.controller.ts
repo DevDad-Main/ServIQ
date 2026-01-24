@@ -2,7 +2,6 @@ import { Response } from "express";
 import { AuthRequest } from "@/types/express";
 import { metadataService } from "@/services/metadata.service";
 import { sendError, sendSuccess } from "devdad-express-utils";
-import { meta } from "zod/mini";
 
 const HTTP_OPTIONS = {
   httpOnly: true,

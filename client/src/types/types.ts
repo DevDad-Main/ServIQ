@@ -27,6 +27,33 @@ export interface Metadata {
 export type SectionStatus = "active" | "draft" | "disabled";
 export type Tone = "strict" | "neutral" | "friendly" | "empathetic";
 
+export interface Section {
+  id: string;
+  userEmail: string;
+  name: string;
+  description: string;
+  sourceIds: string[];
+  tone: Tone;
+  allowedTopics: string[];
+  blockedTopics: string[];
+  status: SectionStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateSectionData {
+  name: string;
+  description: string;
+  sourceIds: string[];
+  tone: Tone;
+  allowedTopics: string[];
+  blockedTopics: string[];
+}
+
+export interface UpdateSectionData extends Partial<CreateSectionData> {
+  status?: SectionStatus;
+}
+
 export interface FormData {
   name: string;
   description: string;

@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import type { AxiosResponse } from "axios";
 import apiClient from "../lib/api";
-import type { KnowledgeSource } from "@/types/types";
+import type {
+  KnowledgeSource,
+  Section,
+  CreateSectionData,
+  UpdateSectionData,
+} from "@/types/types";
 import type { StoreKnowledgeData } from "../lib/api";
 
 interface UseAxiosOptions<T> {
@@ -159,5 +164,118 @@ export function useKnowledge(): UseKnowledgeResult {
     fetchSources,
     storeKnowledge,
     deleteKnowledge,
+  };
+}
+
+export interface UseSectionsResult {
+  sections: Section[];
+  loading: boolean;
+  error: Error | null;
+  fetchSections: () => Promise<void>;
+  createSection: (data: CreateSectionData) => Promise<void>;
+  updateSection: (id: string, data: UpdateSectionData) => Promise<void>;
+  deleteSection: (id: string) => Promise<void>;
+}
+
+export function useSections(): UseSectionsResult {
+  const [sections, setSections] = useState<Section[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchSections = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await apiClient.get("/api/section/fetch");
+      console.log("Fetch RESPONSE: ", response.data);
+      const responseData = response.data as {
+        success: boolean;
+        data?: Section[];
+      };
+
+      if (responseData.success && responseData.data) {
+        console.log("Setting sections to:", responseData.data);
+        console.log("Is it an array?", Array.isArray(responseData.data));
+        setSections(responseData.data);
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error ? err : new Error("Failed to fetch sections"),
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const createSection = useCallback(
+    async (data: CreateSectionData) => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        await apiClient.post("/api/section/create", data);
+        await fetchSections();
+      } catch (err) {
+        setError(
+          err instanceof Error ? err : new Error("Failed to create section"),
+        );
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [fetchSections],
+  );
+
+  const updateSection = useCallback(
+    async (id: string, data: UpdateSectionData) => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        await apiClient.put(`/api/section/${id}`, data);
+        await fetchSections();
+      } catch (err) {
+        setError(
+          err instanceof Error ? err : new Error("Failed to update section"),
+        );
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [fetchSections],
+  );
+
+  const deleteSection = useCallback(async (id: string) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await apiClient.delete(`/api/section/${id}`);
+      setSections((prev) => prev.filter((s) => s.id !== id));
+    } catch (err) {
+      setError(
+        err instanceof Error ? err : new Error("Failed to delete section"),
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchSections();
+  }, [fetchSections]);
+
+  return {
+    sections,
+    loading,
+    error,
+    fetchSections,
+    createSection,
+    updateSection,
+    deleteSection,
   };
 }

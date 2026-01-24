@@ -25,29 +25,30 @@ export const sectionController = {
       );
     }
 
-    if (
-      !allowedTopics ||
-      !Array.isArray(allowedTopics) ||
-      allowedTopics.length === 0
-    ) {
-      return sendError(
-        res,
-        "Invalid allowedTopics Array. At least one source is required",
-        400,
-      );
-    }
+    // if (
+    //   !allowedTopics ||
+    //   !Array.isArray(allowedTopics) ||
+    //   allowedTopics.length === 0
+    // ) {
+    //   return sendError(
+    //     res,
+    //     "Invalid allowedTopics Array. At least one source is required",
+    //     400,
+    //   );
+    // }
 
-    if (
-      !blockedTopics ||
-      !Array.isArray(blockedTopics) ||
-      blockedTopics.length === 0
-    ) {
-      return sendError(
-        res,
-        "Invalid blockedTopics Array. At least one source is required",
-        400,
-      );
-    }
+    // if (
+    //   !blockedTopics ||
+    //   !Array.isArray(blockedTopics) ||
+    //   blockedTopics.length === 0
+    // ) {
+    //   return sendError(
+    //     res,
+    //     "Invalid blockedTopics Array. At least one source is required",
+    //     400,
+    //   );
+    // }
+
     const input = {
       userEmail: user.email,
       name,
@@ -90,7 +91,12 @@ export const sectionController = {
       return sendError(res, "No Sections Data Found", 404);
     }
 
-    return sendSuccess(res, sections, "Sections Fetched Successfully", 200);
+    return sendSuccess(
+      res,
+      sections.data,
+      "Sections Fetched Successfully",
+      200,
+    );
   }),
 
   delete: catchAsync(async (req: AuthRequest, res: Response) => {

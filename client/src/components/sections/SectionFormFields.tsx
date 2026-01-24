@@ -65,7 +65,7 @@ const SectionFormFields = ({
           <Label className="text-zinc-300">Section Name</Label>
           <Input
             placeholder="e.g: Billing Policy"
-            className="bg-white/2 border-white/10 text-white placeholder:text-zinc-600"
+            className="bg-[#0f0f0f] border-white/10 text-zinc-100 placeholder:text-zinc-600"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
@@ -74,7 +74,7 @@ const SectionFormFields = ({
           <Label className="text-zinc-300">Description</Label>
           <Input
             placeholder="When should the AI use this?"
-            className="bg-white/2 border-white/10 text-white placeholder:text-zinc-600"
+            className="bg-[#0f0f0f] border-white/10 text-zinc-100 placeholder:text-zinc-600"
             value={formData.description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
@@ -222,7 +222,7 @@ const SectionFormFields = ({
             <div className="space-y-2">
               <Label className="text-zinc-300 text-xs">Allowed Topics.</Label>
               <Input
-                className=""
+                className="bg-[#0f0f0f] border-white/10 text-zinc-100 placeholder:text-zinc-600"
                 placeholder="e.g: pricing, refunds"
                 value={formData.allowedTopics}
                 onChange={(e) =>
@@ -234,7 +234,7 @@ const SectionFormFields = ({
             <div className="space-y-2">
               <Label className="text-zinc-300 text-xs">Blocked Topics.</Label>
               <Input
-                className=""
+                className="bg-[#0f0f0f] border-white/10 text-zinc-100 placeholder:text-zinc-600"
                 placeholder="e.g: competitors, irrelevant content"
                 value={formData.blockedTopics}
                 onChange={(e) =>
