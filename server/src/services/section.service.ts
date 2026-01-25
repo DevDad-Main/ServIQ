@@ -16,6 +16,18 @@ interface SectionFetchInput {
   userEmail: string;
 }
 
+interface SectionUpdateInput {
+  userEmail: string;
+  id: string;
+  name?: string;
+  description?: string;
+  tone?: string;
+  allowedTopics?: string[];
+  blockedTopics?: string[];
+  status?: string;
+  sourceIds?: string[];
+}
+
 interface SectionDeleteInput {
   userEmail: string;
   id: string;
@@ -43,6 +55,10 @@ interface SectionResult extends defaultResponse {
 
 interface SectionFetchResult extends defaultResponse {
   data?: SectionData[];
+}
+
+interface SectionUpdateResult extends defaultResponse {
+  data?: SectionData;
 }
 
 interface SectionDeleteResult extends defaultResponse {
@@ -117,8 +133,8 @@ export const sectionService = {
 
     if (sections.length === 0) {
       return {
-        success: false,
-        error: "No sections found",
+        success: true,
+        data: [],
       };
     }
 
@@ -126,6 +142,51 @@ export const sectionService = {
       success: true,
       data: sections,
     };
+  },
+
+  async update(input: SectionUpdateInput): Promise<SectionUpdateResult> {
+    const { userEmail, id, ...updateData } = input;
+
+    if (!userEmail) {
+      return {
+        success: false,
+        error: "Missing userEmail",
+      };
+    }
+
+    if (!id) {
+      return {
+        success: false,
+        error: "Missing id",
+      };
+    }
+
+    try {
+      const section = await prisma.section.update({
+        where: {
+          id,
+          userEmail,
+        },
+        data: updateData,
+      });
+
+      if (!section) {
+        return {
+          success: false,
+          error: "Failed to update section",
+        };
+      }
+
+      return {
+        success: true,
+        data: {
+          ...section,
+        },
+      };
+    } catch (error) {
+      console.error("Failed to update section:", error);
+      return { success: false, error: "Failed to update section" };
+    }
   },
 
   async delete(input: SectionDeleteInput): Promise<SectionDeleteResult> {

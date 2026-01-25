@@ -186,17 +186,14 @@ export function useSections(): UseSectionsResult {
     setLoading(true);
     setError(null);
 
-    try {
-      const response = await apiClient.get("/api/section/fetch");
-      console.log("Fetch RESPONSE: ", response.data);
+      try {
+        const response = await apiClient.get("/api/section/fetch");
       const responseData = response.data as {
         success: boolean;
         data?: Section[];
       };
 
       if (responseData.success && responseData.data) {
-        console.log("Setting sections to:", responseData.data);
-        console.log("Is it an array?", Array.isArray(responseData.data));
         setSections(responseData.data);
       }
     } catch (err) {
@@ -253,7 +250,7 @@ export function useSections(): UseSectionsResult {
     setError(null);
 
     try {
-      await apiClient.delete(`/api/section/${id}`);
+      await apiClient.delete(`/api/section/delete/${id}`);
       setSections((prev) => prev.filter((s) => s.id !== id));
     } catch (err) {
       setError(

@@ -10,6 +10,7 @@ import {
 } from "../ui/table";
 import { getStatusBadge, getToneBadge } from "./sectionBadges";
 import { Button } from "../ui/button";
+import { ShieldAlert } from "lucide-react";
 
 interface SectionTableProps {
   sections: Section[];
@@ -94,7 +95,21 @@ const SectionsTable = ({
         ) : (
           <>
             <TableRow>
-              <TableCell colSpan={6} className="h-48 text-center"></TableCell>
+              <TableCell colSpan={6} className="h-48 text-center">
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <ShieldAlert className="w-8 h-8 text-zinc-600" />
+                  <span className="text-zinc-400">
+                    No sections defined yet.
+                  </span>
+                  <Button
+                    variant="link"
+                    className="text-indigo-400"
+                    onClick={onCreateSection}
+                  >
+                    Create your first section
+                  </Button>
+                </div>
+              </TableCell>
             </TableRow>
           </>
         )}

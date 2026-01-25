@@ -1,11 +1,17 @@
 import { AuthRequest } from "@/middleware/auth.middleware";
 import { sectionService } from "@/services/section.service";
-import { catchAsync, sendError, sendSuccess } from "devdad-express-utils";
+import {
+  catchAsync,
+  logger,
+  sendError,
+  sendSuccess,
+} from "devdad-express-utils";
 import { Response } from "express";
 
 export const sectionController = {
   create: catchAsync(async (req: AuthRequest, res: Response) => {
     const user = req.user;
+
     const { name, description, tone, allowedTopics, blockedTopics, sourceIds } =
       req.body;
 
@@ -24,7 +30,6 @@ export const sectionController = {
         400,
       );
     }
-
     // if (
     //   !allowedTopics ||
     //   !Array.isArray(allowedTopics) ||
@@ -88,7 +93,9 @@ export const sectionController = {
     }
 
     if (!sections.data) {
-      return sendError(res, "No Sections Data Found", 404);
+      // NOTE: Stops us from throwing an error as if something were wrong the above defense check would success
+      logger.info("No Sections Data Found");
+      return sendError(res, "No Sections Data Found", 200);
     }
 
     return sendSuccess(
@@ -97,6 +104,51 @@ export const sectionController = {
       "Sections Fetched Successfully",
       200,
     );
+  }),
+
+  update: catchAsync(async (req: AuthRequest, res: Response) => {
+    const user = req.user;
+    const { id } = req.params as { id: string };
+    const { name, description, tone, allowedTopics, blockedTopics, status, sourceIds } = req.body;
+
+    if (!user) {
+      return sendError(res, "Unauthorized", 401);
+    }
+
+    if (!id) {
+      return sendError(res, "Invalid ID", 400);
+    }
+
+    const updateData: any = {};
+    if (name !== undefined) updateData.name = name;
+    if (description !== undefined) updateData.description = description;
+    if (tone !== undefined) updateData.tone = tone;
+    if (allowedTopics !== undefined) updateData.allowedTopics = allowedTopics;
+    if (blockedTopics !== undefined) updateData.blockedTopics = blockedTopics;
+    if (status !== undefined) updateData.status = status;
+    if (sourceIds !== undefined) updateData.sourceIds = sourceIds;
+
+    if (Object.keys(updateData).length === 0) {
+      return sendError(res, "No valid fields to update", 400);
+    }
+
+    const input = {
+      userEmail: user.email,
+      id,
+      ...updateData,
+    };
+
+    const section = await sectionService.update(input);
+
+    if (!section.success) {
+      return sendError(res, section.error ?? "Failed to update section", 404);
+    }
+
+    if (!section.data) {
+      return sendError(res, "No Section Data Found", 404);
+    }
+
+    return sendSuccess(res, section.data, "Section Updated Successfully", 200);
   }),
 
   delete: catchAsync(async (req: AuthRequest, res: Response) => {

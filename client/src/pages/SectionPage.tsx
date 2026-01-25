@@ -3,11 +3,11 @@ import SectionsTable from "@/components/sections/SectionsTable";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
 } from "@/components/ui/sheet";
 import { useKnowledge, useSections } from "@/hooks/useApi";
 import { toast } from "@/lib/toast";
@@ -17,174 +17,174 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 
 interface SectionPageInterface {
-    id: string;
-    name: string;
-    description: string;
-    sourceCount: number;
-    source_ids?: string[];
-    tone: Tone;
-    scopeLabel: string;
-    allowed_topics?: string;
-    blocked_topics?: string;
-    status: SectionStatus;
+  id: string;
+  name: string;
+  description: string;
+  sourceCount: number;
+  source_ids?: string[];
+  tone: Tone;
+  scopeLabel: string;
+  allowed_topics?: string;
+  blocked_topics?: string;
+  status: SectionStatus;
 }
 
 interface KnowledgeSource {
-    id: string;
-    name: string;
-    type: string;
-    status: string;
+  id: string;
+  name: string;
+  type: string;
+  status: string;
 }
 
 const INITIAL_FORM_DATA: FormData = {
-    name: "",
-    description: "",
-    tone: "neutral",
-    allowedTopics: "",
-    blockedTopics: "",
-    fallbackBehaviour: "escalate",
+  name: "",
+  description: "",
+  tone: "neutral",
+  allowedTopics: "",
+  blockedTopics: "",
+  fallbackBehaviour: "escalate",
 };
 
 const SectionPage = () => {
-    const {
-        sources: knowledgeSources,
-        loading: isLoadingSources,
-        fetchSources,
-    } = useKnowledge();
+  const {
+    sources: knowledgeSources,
+    loading: isLoadingSources,
+    fetchSources,
+  } = useKnowledge();
 
-    const {
-        sections,
-        loading: isLoadingSections,
-        error: sectionsError,
-        createSection,
-        updateSection,
-        deleteSection,
-    } = useSections();
+  const {
+    sections,
+    loading: isLoadingSections,
+    error: sectionsError,
+    createSection,
+    updateSection,
+    deleteSection,
+  } = useSections();
 
-    const [isSheetOpen, setIsSheetOpen] = useState(false);
-    const [selectedSection, setSelectedSection] =
-        useState<SectionPageInterface | null>(null);
-    const [selectedSources, setSelectedSources] = useState<string[]>([]);
-    const [isSaving, setIsSaving] = useState(false);
-    const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [selectedSection, setSelectedSection] =
+    useState<SectionPageInterface | null>(null);
+  const [selectedSources, setSelectedSources] = useState<string[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+  const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
 
-    const handleCreateSection = async () => {
-        setSelectedSection({
-            id: "new",
-            name: "",
-            description: "",
-            sourceCount: 0,
-            tone: "neutral",
-            scopeLabel: "",
-            status: "draft",
-        });
-        setSelectedSources([]);
-        setFormData(INITIAL_FORM_DATA);
-        setIsSheetOpen(true);
-    };
+  const handleCreateSection = async () => {
+    setSelectedSection({
+      id: "new",
+      name: "",
+      description: "",
+      sourceCount: 0,
+      tone: "neutral",
+      scopeLabel: "",
+      status: "draft",
+    });
+    setSelectedSources([]);
+    setFormData(INITIAL_FORM_DATA);
+    setIsSheetOpen(true);
+  };
 
-    const handleSaveSection = async () => {
-        if (isSaving) return;
+  const handleSaveSection = async () => {
+    if (isSaving) return;
 
-        setIsSaving(true);
+    setIsSaving(true);
 
-        try {
-            const allowedTopicsArray = formData.allowedTopics
-                .split(",")
-                .map((topic) => topic.trim())
-                .filter((topic) => topic.length > 0);
+    try {
+      const allowedTopicsArray = formData.allowedTopics
+        .split(",")
+        .map((topic) => topic.trim())
+        .filter((topic) => topic.length > 0);
 
-            const blockedTopicsArray = formData.blockedTopics
-                .split(",")
-                .map((topic) => topic.trim())
-                .filter((topic) => topic.length > 0);
+      const blockedTopicsArray = formData.blockedTopics
+        .split(",")
+        .map((topic) => topic.trim())
+        .filter((topic) => topic.length > 0);
 
-            const sectionData = {
-                name: formData.name,
-                description: formData.description,
-                sourceIds: selectedSources,
-                tone: formData.tone,
-                allowedTopics: allowedTopicsArray,
-                blockedTopics: blockedTopicsArray,
-            };
+      const sectionData = {
+        name: formData.name,
+        description: formData.description,
+        sourceIds: selectedSources,
+        tone: formData.tone,
+        allowedTopics: allowedTopicsArray,
+        blockedTopics: blockedTopicsArray,
+      };
 
-            const validation = validateSectionWithZod(sectionData);
-            if (!validation.valid) {
-                toast.error(validation.error || "Invalid section data");
-                return;
-            }
+      const validation = validateSectionWithZod(sectionData);
+      if (!validation.valid) {
+        toast.error(validation.error || "Invalid section data");
+        return;
+      }
 
-            await createSection(validation.value);
-            toast.success("Section created successfully");
-            setIsSheetOpen(false);
-            setSelectedSection(null);
-            setFormData(INITIAL_FORM_DATA);
-            setSelectedSources([]);
-        } catch (error) {
-            console.error("Failed to create section:", error);
-            toast.error("Failed to create section");
-        } finally {
-            setIsSaving(false);
-        }
-    };
+      await createSection(validation.value);
+      toast.success("Section created successfully");
+      setIsSheetOpen(false);
+      setSelectedSection(null);
+      setFormData(INITIAL_FORM_DATA);
+      setSelectedSources([]);
+    } catch (error) {
+      console.error("Failed to create section:", error);
+      toast.error("Failed to create section");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
-    const handlePreviewSection = async (section: Section) => {
-        setSelectedSection(section);
-        setFormData({
-            name: section.name,
-            description: section.description,
-            tone: section.tone,
-            allowedTopics: section.allowedTopics || "",
-            blockedTopics: section.blockedTopics || "",
-            fallbackBehaviour: "escalate"
-        })
-        setSelectedSources(section.sourceIds || [])
-        setIsSheetOpen(true)
-    };
+  const handlePreviewSection = async (section: Section) => {
+    setSelectedSection(section);
+    setFormData({
+      name: section.name,
+      description: section.description,
+      tone: section.tone,
+      allowedTopics: section.allowedTopics || "",
+      blockedTopics: section.blockedTopics || "",
+      fallbackBehaviour: "escalate",
+    });
+    setSelectedSources(section.sourceIds || []);
+    setIsSheetOpen(true);
+  };
 
-    const handleDeleteSection = async () => {
-        if (!selectedSection || selectedSection.id === "new" || isSaving) return;
+  const handleDeleteSection = async () => {
+    if (!selectedSection || selectedSection.id === "new" || isSaving) return;
 
-        setIsSaving(true);
+    setIsSaving(true);
 
-        try {
-            await deleteSection(selectedSection.id);
-            toast.success("Section deleted successfully");
-            setIsSheetOpen(false);
-            setSelectedSection(null);
-        } catch (error) {
-            console.error("Failed to delete section:", error);
-            toast.error("Failed to delete section");
-        } finally {
-            setIsSaving(false);
-        }
-    };
+    try {
+      await deleteSection(selectedSection.id);
+      toast.success("Section deleted successfully");
+      setIsSheetOpen(false);
+      setSelectedSection(null);
+    } catch (error) {
+      console.error("Failed to delete section:", error);
+      toast.error("Failed to delete section");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
-    const isPreviewMode = selectedSection?.id !== "new";
+  const isPreviewMode = selectedSection?.id !== "new";
 
-    console.log("SECTIONS DATA", sections);
+  console.log("SECTIONS DATA", sections);
 
-    return (
-        <div className="p-8 space-y-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold text-white">Sections</h1>
-                    <p className=" text-zinc-400 mt-1">
-                        Define behaviour and the tone for different topics
-                    </p>
-                </div>
+  return (
+    <div className="p-8 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-white">Sections</h1>
+          <p className=" text-zinc-400 mt-1">
+            Define behaviour and the tone for different topics
+          </p>
+        </div>
 
-                <Button
-                    onClick={handleCreateSection}
-                    className="bg-white text-black hover:bg-zinc-200"
-                >
-                    <Plus className="w-4 h-4 mr-2" />
-                    Create Section
-                </Button>
-            </div>
+        <Button
+          onClick={handleCreateSection}
+          className="bg-white text-black hover:bg-zinc-200"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Create Section
+        </Button>
+      </div>
       // {/* Card Sections */}
       //{" "}
-            {/* }<Card className="border-white/5 bg-[#0a0a0e]">
+      {/* }<Card className="border-white/5 bg-[#0a0a0e]">
       //   <CardContent className="p-6">
       //     {isLoadingSections ? (
       //       <div className="text-center text-zinc-400">Loading sections...</div>
@@ -253,85 +253,85 @@ const SectionPage = () => {
 
 
       {/* Card Sections */}
-            <Card className="border-white/5 bg-[#0a0a0e]">
-                <CardContent className="p-6">
-                    <SectionsTable
-                        sections={sections}
-                        isLoading={isLoadingSections}
-                        onPreview={handlePreviewSection}
-                        onCreateSelection={handleCreateSection}
-                    />
-                </CardContent>
-            </Card>
-            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                <SheetContent className="w-full sm:max-w-lg border-l border-white/10 bg-[#0a0a0e] p-0 shadow-2xl flex flex-col h-full">
-                    {selectedSection && (
-                        <>
-                            <SheetHeader
-                                className="
+      <Card className="border-white/5 bg-[#0a0a0e]">
+        <CardContent className="p-6">
+          <SectionsTable
+            sections={sections}
+            isLoading={isLoadingSections}
+            onPreview={handlePreviewSection}
+            onCreateSelection={handleCreateSection}
+          />
+        </CardContent>
+      </Card>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetContent className="w-full sm:max-w-lg border-l border-white/10 bg-[#0a0a0e] p-0 shadow-2xl flex flex-col h-full">
+          {selectedSection && (
+            <>
+              <SheetHeader
+                className="
                 p-6 border-b border-white/5"
-                            >
-                                <SheetTitle className="text-xl text-white">
-                                    {selectedSection.id === "new"
-                                        ? "Create Section"
-                                        : "View Section"}
-                                </SheetTitle>
-                                <SheetDescription className="text-zinc-500">
-                                    {selectedSection.id === "new"
-                                        ? "Configure how the AI behaves for this specific topic"
-                                        : "Review section configuration and data sources"}
-                                </SheetDescription>
-                            </SheetHeader>
+              >
+                <SheetTitle className="text-xl text-white">
+                  {selectedSection.id === "new"
+                    ? "Create Section"
+                    : "View Section"}
+                </SheetTitle>
+                <SheetDescription className="text-zinc-500">
+                  {selectedSection.id === "new"
+                    ? "Configure how the AI behaves for this specific topic"
+                    : "Review section configuration and data sources"}
+                </SheetDescription>
+              </SheetHeader>
 
-                            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8">
-                                <SectionFormFields
-                                    formData={formData}
-                                    setFormData={setFormData}
-                                    selectedSources={selectedSources}
-                                    setSelectedSources={setSelectedSources}
-                                    knowledgeSources={knowledgeSources}
-                                    isLoadingSources={isLoadingSources}
-                                    isDisabled={isPreviewMode}
-                                />
-                            </div>
+              <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8">
+                <SectionFormFields
+                  formData={formData}
+                  setFormData={setFormData}
+                  selectedSources={selectedSources}
+                  setSelectedSources={setSelectedSources}
+                  knowledgeSources={knowledgeSources}
+                  isLoadingSources={isLoadingSources}
+                  isDisabled={isPreviewMode}
+                />
+              </div>
 
-                            {selectedSection.id === "new" && (
-                                <div className="p-6 border-t border-white/5">
-                                    <Button
-                                        className="w-full bg-white text-black hover:bg-zinc"
-                                        onClick={handleSaveSection}
-                                        disabled={isSaving}
-                                    >
-                                        {isSaving ? "Creating..." : "Create Section"}
-                                    </Button>
-                                </div>
-                            )}
+              {selectedSection.id === "new" && (
+                <div className="p-6 border-t border-white/5">
+                  <Button
+                    className="w-full bg-white text-black hover:bg-zinc-200"
+                    onClick={handleSaveSection}
+                    disabled={isSaving}
+                  >
+                    {isSaving ? "Creating..." : "Create Section"}
+                  </Button>
+                </div>
+              )}
 
-                            {selectedSection.id !== "new" && (
-                                <div className="p-6 bg-red-500/5 border-t border-red-500/10 ">
-                                    <h5 className="text-sm font-medium text-red-400 mb-1">
-                                        Danger Zone
-                                    </h5>
-                                    <p className="text-xs text-red-500/70 mb-3">
-                                        Deleting this section will remove all associated rules.
-                                    </p>
-                                    <Button
-                                        className="w-full bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20 shadow-none"
-                                        variant="destructive"
-                                        size="sm"
-                                        onClick={handleDeleteSection}
-                                        disabled={isSaving}
-                                    >
-                                        {isSaving ? "Deleting..." : "Delete Section"}
-                                    </Button>
-                                </div>
-                            )}
-                        </>
-                    )}
-                </SheetContent>
-            </Sheet>
-        </div>
-    );
+              {selectedSection.id !== "new" && (
+                <div className="p-6 bg-red-500/5 border-t border-red-500/10 ">
+                  <h5 className="text-sm font-medium text-red-400 mb-1">
+                    Danger Zone
+                  </h5>
+                  <p className="text-xs text-red-500/70 mb-3">
+                    Deleting this section will remove all associated rules.
+                  </p>
+                  <Button
+                    className="w-full bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20 shadow-none"
+                    variant="destructive"
+                    size="sm"
+                    onClick={handleDeleteSection}
+                    disabled={isSaving}
+                  >
+                    {isSaving ? "Deleting..." : "Delete Section"}
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
+        </SheetContent>
+      </Sheet>
+    </div>
+  );
 };
 
 export default SectionPage;

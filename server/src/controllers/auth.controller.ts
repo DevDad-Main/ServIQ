@@ -8,10 +8,7 @@ export const authController = {
   status: (req: AuthRequest, res: Response): void => {
     sendSuccess(
       res,
-      {
-        authenticated: true,
-        user: req.user,
-      },
+      { authenticated: true, user: req.user },
       "Fetched User From Session Successfully",
       200,
     );

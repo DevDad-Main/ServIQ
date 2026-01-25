@@ -6,6 +6,7 @@ const router = Router();
 
 router.post("/create", authMiddleware, sectionController.create);
 router.get("/fetch", authMiddleware, sectionController.fetch);
-router.delete("/delete", authMiddleware, sectionController.delete);
+router.put("/update/:id", authMiddleware, sectionController.update);
+router.delete("/delete/:id", authMiddleware, sectionController.delete);
 
 export default router;

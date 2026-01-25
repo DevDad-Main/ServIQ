@@ -8,7 +8,7 @@ export function getStatusBadge(status: SectionStatus) {
     case "draft":
       return <Badge variant="secondary">Draft</Badge>
     case "disabled":
-      return <Badge variant={"outline"} className="text-zinc-500"></Badge>
+      return <Badge variant={"outline"} className="text-zinc-500">Disabled</Badge>
 
   }
 }
