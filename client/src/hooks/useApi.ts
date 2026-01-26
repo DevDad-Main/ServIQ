@@ -276,3 +276,83 @@ export function useSections(): UseSectionsResult {
     deleteSection,
   };
 }
+
+export interface UseChatbotResult {
+  metadata: {
+    id: string;
+    userEmail: string;
+    colour: string;
+    welcomeMessage: string;
+    createdAt: string;
+    sourceIds: string[];
+  } | null;
+  loading: boolean;
+  error: Error | null;
+  fetchMetadata: () => Promise<void>;
+}
+
+export function useChatbot(): UseChatbotResult {
+  const [metadata, setMetadata] = useState<{
+    id: string;
+    userEmail: string;
+    colour: string;
+    welcomeMessage: string;
+    createdAt: string;
+    sourceIds: string[];
+  } | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchMetadata = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await apiClient.get("/api/chatbot/fetch");
+      console.log("Chatbot response:", response.data);
+      const responseData = response.data as {
+        success: boolean;
+        data: {
+          success: boolean;
+          data?: {
+            id: string;
+            userEmail: string;
+            colour: string;
+            welcomeMessage: string;
+            createdAt: string;
+            updatedAt?: string;
+            sourceIds?: string[];
+          };
+        };
+      };
+
+      if (responseData.success && responseData.data.data) {
+        // responseData.data.data is the actual metadata object (nested structure)
+        const actualData = responseData.data.data;
+        const metadataWithDefaults = {
+          ...actualData,
+          sourceIds: actualData.sourceIds || []
+        };
+        console.log("Setting metadata:", metadataWithDefaults);
+        setMetadata(metadataWithDefaults);
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error ? err : new Error("Failed to fetch chatbot metadata"),
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchMetadata();
+  }, [fetchMetadata]);
+
+  return {
+    metadata,
+    loading,
+    error,
+    fetchMetadata,
+  };
+}

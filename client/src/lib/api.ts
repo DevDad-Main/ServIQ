@@ -55,6 +55,10 @@ export const knowledgeApi = {
   delete: (id: string) => apiClient.delete(`/api/knowledge/${id}`),
 };
 
+export const chatbotApi = {
+  fetch: () => apiClient.get("/api/chatbot/fetch"),
+};
+
 export const sectionsApi = {
   fetch: () =>
     apiClient.get<{ success: boolean; data?: { sections: import("@/types/types").Section[] } }>(

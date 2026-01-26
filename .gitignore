@@ -39,6 +39,8 @@ combined.log
 error.log
 *.log
 
+server/*.log
+
 # vercel
 .vercel
 

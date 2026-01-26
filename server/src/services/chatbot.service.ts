@@ -23,27 +23,30 @@ export const chatbotMetadataService = {
         };
       }
 
-      const exisitingMetadata = await prisma.chatbotMetadata.findFirst({
+      let metaData;
+
+      metaData = await prisma.chatbotMetadata.findFirst({
         where: {
           userEmail: email,
         },
       });
 
-      if (!exisitingMetadata) {
-        // NOTE: This could be okay as if it is a new user then it's expected, otherwise something is wrong for exisitng users.
-        logger.warn("No Existing Metadata Found..", {
-          exisitingMetadata,
-          email,
-        });
+      if (metaData) {
         return {
-          success: false,
-          error: "Cannot Find Existing Metadata.",
+          success: true,
+          data: metaData,
         };
       }
 
+      metaData = await prisma.chatbotMetadata.create({
+        data: {
+          userEmail: email,
+        },
+      });
+
       return {
         success: true,
-        data: { exisitingMetadata },
+        data: metaData,
       };
     } catch (error: any) {
       logger.error(

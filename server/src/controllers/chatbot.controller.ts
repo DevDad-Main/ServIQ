@@ -39,6 +39,8 @@ export const chatbotcontroller = {
       );
     }
 
+    logger.info("ExisitingData...", existingData)
+
     return sendSuccess(
       res,
       existingData,
