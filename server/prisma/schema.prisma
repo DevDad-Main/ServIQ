@@ -58,3 +58,12 @@ model Section {
 
   @@map("section")
 }
+
+model ChatbotMetadata {
+  id             String   @id @default(uuid())
+  userEmail      String
+  colour         String   @default("#4f39f6")
+  welcomeMessage String   @default("Hello there, How can i help you today?")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

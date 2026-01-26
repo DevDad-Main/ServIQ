@@ -109,7 +109,15 @@ export const sectionController = {
   update: catchAsync(async (req: AuthRequest, res: Response) => {
     const user = req.user;
     const { id } = req.params as { id: string };
-    const { name, description, tone, allowedTopics, blockedTopics, status, sourceIds } = req.body;
+    const {
+      name,
+      description,
+      tone,
+      allowedTopics,
+      blockedTopics,
+      status,
+      sourceIds,
+    } = req.body;
 
     if (!user) {
       return sendError(res, "Unauthorized", 401);

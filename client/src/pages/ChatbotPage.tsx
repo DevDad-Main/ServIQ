@@ -1,5 +1,5 @@
 import ChatSimulator from "@/components/chatbot/ChatSimulator";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Section } from "../types/types";
 
 interface ChatbotMetadata {
@@ -26,8 +26,19 @@ const ChatbotPage = () => {
   const [welcomeMessage, setWelcomeMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
+  useEffect(() => {
+    if (scrollViewportRef.current) {
+      scrollViewportRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isTyping]);
+
+  const handleSend = async () => {};
+  const handleKeyDown = async () => {};
+  const handleSectionClick = async () => {};
+  const handleReset = async () => {};
+
   return (
-    <div className="p-6 mx-auto md:p-8 space-y-8 max-w-400 animate-in fade-in duration-500 h[calc(100vh-64px)] overflow-hidden flex flex-col">
+    <div className="p-6 mx-auto md:p-8 space-y-8 max-w-[400px] animate-in fade-in duration-500 h-[calc(100vh-64px)] overflow-hidden flex flex-col">
       <div className="flex items-center justify-between shrink-0">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-white">
@@ -39,8 +50,8 @@ const ChatbotPage = () => {
         </div>
       </div>
 
-      <div className="h-full min-h-0 grid grid-cols-1 lg:grid-cols-12 ap-6">
-        <div className="flex flex-col min-h-0 lg:col-span-7 h-ful space-y-4">
+      <div className="h-full min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="flex flex-col h-full min-h-0 lg:col-span-7 space-y-4">
           <ChatSimulator
             messages={messages}
             primaryColour={primaryColour}
@@ -49,9 +60,9 @@ const ChatbotPage = () => {
             setInput={setInput}
             handleSend={handleSend}
             handleKeyDown={handleKeyDown}
-            handleSectionClick={handleSelectionClick}
+            handleSectionClick={handleSectionClick}
             activeSection={activeSection}
-            istyping={isTyping}
+            isTyping={isTyping}
             handleReset={handleReset}
             scrollRef={scrollViewportRef}
           />

@@ -6,6 +6,7 @@ import authRoutes from "@/routes/auth/auth.routes";
 import metadataRoutes from "@/routes/metadata/metadata.routes";
 import knowledgeRoutes from "@/routes/knowledge/knowledge.routes";
 import sectionRouter from "@/routes/section/section.routes";
+import chatbotRouter from "@/routes/chatbot/chatbot.routes";
 import { logger } from "devdad-express-utils";
 
 const app = express();
@@ -34,5 +35,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/metadata", metadataRoutes);
 app.use("/api/knowledge", knowledgeRoutes);
 app.use("/api/section", sectionRouter);
+app.use("/api/chatbot", chatbotRouter);
 
 export default app;
